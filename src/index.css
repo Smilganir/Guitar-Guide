@@ -1,0 +1,161 @@
+:root {
+  --font-family: 'Heebo', 'Segoe UI', Tahoma, sans-serif;
+
+  --bg-primary: #FFF8F0;
+  --bg-secondary: #F5EDE4;
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 2px 16px rgba(139, 90, 43, 0.08);
+  --card-shadow-hover: 0 8px 32px rgba(139, 90, 43, 0.14);
+
+  --accent: #C17B3A;
+  --accent-light: #F5E6D3;
+  --accent-dark: #8B5A2B;
+  --success: #5B9A6F;
+  --danger: #D35D5D;
+  --warning: #E8A87C;
+
+  --text-primary: #3D2B1F;
+  --text-secondary: #8B7355;
+
+  --fret-color: #B8A590;
+  --string-color: #8B7355;
+  --dot-color: #3D2B1F;
+  --muted-color: #C4A882;
+  --open-color: #5B9A6F;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  direction: rtl;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-family);
+}
+
+.page {
+  flex: 1;
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+}
+
+.page__subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.25s;
+}
+
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.chip {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.chip--active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 16px;
+  }
+
+  .page__title {
+    font-size: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,142 @@
+.theory__topics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 32px;
+}
+
+.theory__card {
+  cursor: pointer;
+  border-right: 5px solid var(--topic-color);
+  overflow: hidden;
+}
+
+.theory__card--expanded {
+  cursor: default;
+}
+
+.theory__card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.theory__card-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--topic-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.theory__card-icon {
+  font-size: 1.5rem;
+}
+
+.theory__card-header-text {
+  flex: 1;
+}
+
+.theory__card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.theory__card-summary {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.theory__card-chevron {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.theory__card-chevron--open {
+  transform: rotate(-90deg);
+}
+
+.theory__card-body {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.theory__formula-box {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theory__formula-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.theory__formula-label {
+  font-weight: 700;
+  color: var(--accent-dark);
+  min-width: 90px;
+}
+
+.theory__intervals {
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.theory__explanation {
+  line-height: 1.75;
+  color: var(--text-primary);
+}
+
+.theory__explanation p {
+  margin-bottom: 10px;
+}
+
+.theory__explanation p:last-child {
+  margin-bottom: 0;
+}
+
+.theory__examples {
+  padding-top: 8px;
+}
+
+.theory__examples h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin-bottom: 12px;
+}
+
+.theory__examples-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.theory__example-chord {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

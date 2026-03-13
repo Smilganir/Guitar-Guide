@@ -1,0 +1,110 @@
+.strum-pattern {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.strum-pattern__arrows {
+  display: flex;
+  gap: 6px;
+  direction: ltr;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.strum-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  transition: all 0.15s;
+  min-width: 44px;
+}
+
+.strum-arrow--active {
+  background: var(--accent);
+  transform: scale(1.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.strum-arrow--active .strum-arrow__icon,
+.strum-arrow--active .strum-arrow__label {
+  color: white;
+}
+
+.strum-arrow__icon {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.strum-arrow--D .strum-arrow__icon { color: var(--accent); }
+.strum-arrow--U .strum-arrow__icon { color: var(--success); }
+.strum-arrow--x .strum-arrow__icon { color: var(--text-secondary); opacity: 0.5; }
+
+.strum-arrow--active .strum-arrow__icon {
+  color: white !important;
+}
+
+.strum-arrow__label {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.strum-pattern__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.strum-pattern__bpm {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.strum-pattern__bpm-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.strum-pattern__bpm-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.strum-pattern__slider {
+  width: 120px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.strum-pattern__btn {
+  padding: 6px 18px;
+  border: none;
+  border-radius: 20px;
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  transition: all 0.2s;
+}
+
+.strum-pattern__btn:hover {
+  transform: scale(1.05);
+}
+
+.strum-pattern__btn--playing {
+  background: var(--danger);
+}

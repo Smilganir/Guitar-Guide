@@ -1,0 +1,15 @@
+.chord-diagram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: top center;
+}
+
+.chord-diagram svg {
+  overflow: visible;
+}
+
+.chord-name-label {
+  fill: var(--text-primary);
+  font-family: var(--font-family);
+}
