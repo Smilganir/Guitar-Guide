@@ -76,6 +76,43 @@
   border-color: var(--accent);
 }
 
+/* ---------- Tabs ---------- */
+.songs__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 10px 18px 8px;
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+.songs__tab {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.songs__tab:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.songs__tab--active {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+
+.songs__tab--active:hover {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+
 .songs__sidebar-list {
   flex: 1;
   overflow-y: auto;
@@ -618,6 +655,16 @@
     max-height: none;
     border-left: none;
     border-bottom: 1px solid var(--bg-secondary);
+  }
+
+  .songs__tabs {
+    padding: 8px 12px 6px;
+    gap: 4px;
+  }
+
+  .songs__tab {
+    padding: 5px 10px;
+    font-size: 0.75rem;
   }
 
   .songs__sidebar-list {

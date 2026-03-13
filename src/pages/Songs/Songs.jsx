@@ -21,6 +21,7 @@ export default function Songs() {
   });
   const [easyMode, setEasyMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
   const { playChord } = useChordSound();
 
   const [favorites, setFavorites] = useLocalStorage('favorites', []);
@@ -66,15 +67,19 @@ export default function Songs() {
     : selectedSong?.note || null;
 
   const filteredSongs = useMemo(() => {
-    if (!searchQuery.trim()) return songs;
+    let list = songs;
+    if (activeTab === 'israeli') list = list.filter((s) => s.category === 'israeli');
+    else if (activeTab === 'international') list = list.filter((s) => s.category === 'international');
+    else if (activeTab === 'favorites') list = list.filter((s) => favorites.includes(s.id));
+    if (!searchQuery.trim()) return list;
     const q = searchQuery.trim().toLowerCase();
-    return songs.filter(
+    return list.filter(
       (s) =>
         s.titleHe.toLowerCase().includes(q) ||
         s.titleEn.toLowerCase().includes(q) ||
         s.artist.toLowerCase().includes(q)
     );
-  }, [searchQuery]);
+  }, [searchQuery, activeTab, favorites]);
 
   const nextChordIndex = activeSong
     ? (player.chordIndex + 1) % activeSong.progression.length
@@ -103,6 +108,25 @@ export default function Songs() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
+        <nav className="songs__tabs" role="tablist" aria-label={t('songs.title')}>
+          {[
+            { id: 'all', label: t('songs.tabAll') },
+            { id: 'israeli', label: t('songs.tabIsraeli') },
+            { id: 'international', label: t('songs.tabInternational') },
+            { id: 'favorites', label: t('songs.tabFavorites') },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              className={`songs__tab ${activeTab === tab.id ? 'songs__tab--active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
         <div className="songs__sidebar-list">
           {filteredSongs.map((song) => {
             const sp = strumPatterns.find((p) => p.id === song.patternId);

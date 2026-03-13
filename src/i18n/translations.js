@@ -100,6 +100,10 @@ export const translations = {
     },
     songs: {
       title: 'שירים',
+      tabAll: 'הכל',
+      tabIsraeli: 'ישראלי',
+      tabInternational: 'בינלאומי',
+      tabFavorites: 'מועדפים',
       searchPlaceholder: 'חיפוש שיר או אמן...',
       noSongs: 'לא נמצאו שירים',
       selectSong: 'בחרו שיר מהרשימה',
@@ -255,6 +259,10 @@ export const translations = {
     },
     songs: {
       title: 'Songs',
+      tabAll: 'All',
+      tabIsraeli: 'Israeli',
+      tabInternational: 'International',
+      tabFavorites: 'Favorites',
       searchPlaceholder: 'Search song or artist...',
       noSongs: 'No songs found',
       selectSong: 'Select a song from the list',

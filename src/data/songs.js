@@ -1,12 +1,13 @@
 // Song library for Interactive Song Player
 // progression: chord IDs from chords.js (order = left to right: first → second → …)
-// patternId: id from strumPatterns.js — 'island' | 'ballad' | 'ddu-udu' (Rock)
+// patternId: id from strumPatterns.js — 'island' | 'ballad' | 'ddu-udu' | 'driving-pop'
+// category: 'israeli' | 'international' for tab filtering
 // easyProgression: optional simpler chords (Am/C/G keys) for Easy Version toggle
 // easyNote: optional instruction shown in Easy Version (e.g. capo info)
 // note: optional instruction shown always (e.g. capo info)
 
 export const songs = [
-  // === Hebrew ===
+  // === Israeli ===
   {
     id: 'kachi-lach-zman',
     titleHe: 'קחי לך זמן',
@@ -15,6 +16,7 @@ export const songs = [
     progression: ['Gm', 'Bb', 'F', 'Cm'],
     bpm: 82,
     patternId: 'island',
+    category: 'israeli',
     easyProgression: ['Em', 'G', 'D', 'Am'],
     easyNote: 'גרסה קלה — קאפו בסריג 3 כדי לנגן עם המקור',
   },
@@ -26,6 +28,7 @@ export const songs = [
     progression: ['C', 'G', 'Am', 'F'],
     bpm: 88,
     patternId: 'ballad',
+    category: 'israeli',
     note: 'פזמון בלבד',
   },
   {
@@ -36,6 +39,7 @@ export const songs = [
     progression: ['Am', 'F', 'C', 'G'],
     bpm: 70,
     patternId: 'ballad',
+    category: 'israeli',
   },
   {
     id: 'ahava-kazo',
@@ -45,6 +49,75 @@ export const songs = [
     progression: ['Am', 'F', 'C', 'G'],
     bpm: 82,
     patternId: 'ballad',
+    category: 'israeli',
+  },
+  {
+    id: 'boi',
+    titleHe: 'בואי',
+    titleEn: 'Boi',
+    artist: 'עידן רייכל',
+    progression: ['F#m', 'D', 'A', 'E'],
+    bpm: 95,
+    patternId: 'island',
+    category: 'israeli',
+    easyProgression: ['Em', 'C', 'G', 'D'],
+    easyNote: 'גרסה קלה — קאפו בסריג 2 כדי לנגן עם המקור',
+  },
+  {
+    id: 'sahara',
+    titleHe: 'סהרה',
+    titleEn: 'Sahara',
+    artist: 'טונה',
+    progression: ['Cm', 'Ab', 'Eb', 'Bb'],
+    bpm: 85,
+    patternId: 'ballad',
+    category: 'israeli',
+    easyProgression: ['Am', 'F', 'C', 'G'],
+    easyNote: 'גרסה קלה — קאפו בסריג 3 כדי לנגן עם המקור',
+  },
+  {
+    id: 'aluf-haolam',
+    titleHe: 'אלוף העולם',
+    titleEn: 'Aluf Haolam',
+    artist: 'חנן בן ארי',
+    progression: ['Am', 'F', 'C', 'G'],
+    bpm: 80,
+    patternId: 'ballad',
+    category: 'israeli',
+  },
+  {
+    id: 'mi-lo-yavo',
+    titleHe: 'מי לא יבוא',
+    titleEn: 'Mi Lo Yavo',
+    artist: 'אברהם טל',
+    progression: ['Am', 'F', 'C', 'G'],
+    bpm: 122,
+    patternId: 'island',
+    category: 'israeli',
+  },
+  {
+    id: 'panthera',
+    titleHe: 'פנתרה',
+    titleEn: 'Panthera',
+    artist: 'נועה קירל',
+    progression: ['Cm', 'Ab', 'Eb', 'Bb'],
+    bpm: 124,
+    patternId: 'driving-pop',
+    category: 'israeli',
+    easyProgression: ['Am', 'F', 'C', 'G'],
+    easyNote: 'גרסה קלה — קאפו בסריג 3 כדי לנגן עם המקור',
+  },
+  {
+    id: 'shekiot-adumot',
+    titleHe: 'שקיעות אדומות',
+    titleEn: 'Shekiot Adumot',
+    artist: 'עדן חסון',
+    progression: ['Bbm', 'Gb', 'Db', 'Ab'],
+    bpm: 122,
+    patternId: 'island',
+    category: 'israeli',
+    easyProgression: ['Am', 'F', 'C', 'G'],
+    easyNote: 'גרסה קלה — קאפו בסריג 1 כדי לנגן עם המקור',
   },
   {
     id: 'livchor-nachon',
@@ -54,6 +127,7 @@ export const songs = [
     progression: ['Em', 'C', 'G', 'D'],
     bpm: 115,
     patternId: 'ddu-udu',
+    category: 'israeli',
   },
   {
     id: 'of-muzar',
@@ -63,11 +137,12 @@ export const songs = [
     progression: ['F#m', 'D', 'A', 'E'],
     bpm: 152,
     patternId: 'ballad',
+    category: 'israeli',
     easyProgression: ['Em', 'C', 'G', 'D'],
     easyNote: 'גרסה קלה — קאפו בסריג 2 כדי לנגן עם המקור',
   },
 
-  // === English ===
+  // === International ===
   {
     id: 'counting-stars',
     titleHe: 'Counting Stars',
@@ -76,6 +151,7 @@ export const songs = [
     progression: ['C#m', 'E', 'B', 'A'],
     bpm: 122,
     patternId: 'island',
+    category: 'international',
     easyProgression: ['Am', 'C', 'G', 'F'],
     easyNote: 'גרסה קלה — קאפו בסריג 4 כדי לנגן עם המקור',
   },
@@ -87,6 +163,7 @@ export const songs = [
     progression: ['F#m', 'D', 'E', 'C#m'],
     bpm: 98,
     patternId: 'island',
+    category: 'international',
     easyProgression: ['Em', 'C', 'D', 'Bm'],
     easyNote: 'גרסה קלה — קאפו בסריג 2 כדי לנגן עם המקור',
   },
@@ -98,6 +175,7 @@ export const songs = [
     progression: ['Fm', 'Db', 'Ab', 'Eb'],
     bpm: 63,
     patternId: 'ballad',
+    category: 'international',
     easyProgression: ['Em', 'C', 'G', 'D'],
     easyNote: 'גרסה קלה — קאפו בסריג 1 כדי לנגן עם המקור',
   },
@@ -109,7 +187,30 @@ export const songs = [
     progression: ['F#m', 'A', 'E', 'B'],
     bpm: 87,
     patternId: 'island',
+    category: 'international',
     easyProgression: ['Em', 'G', 'D', 'A'],
+    easyNote: 'גרסה קלה — קאפו בסריג 2 כדי לנגן עם המקור',
+  },
+  {
+    id: 'happier-than-ever',
+    titleHe: 'Happier Than Ever',
+    titleEn: 'Happier Than Ever',
+    artist: 'Billie Eilish',
+    progression: ['C', 'E', 'Am', 'F'],
+    bpm: 81,
+    patternId: 'ballad',
+    category: 'international',
+  },
+  {
+    id: 'as-it-was',
+    titleHe: 'As It Was',
+    titleEn: 'As It Was',
+    artist: 'Harry Styles',
+    progression: ['A', 'F#m', 'D', 'E'],
+    bpm: 174,
+    patternId: 'island',
+    category: 'international',
+    easyProgression: ['G', 'Em', 'C', 'D'],
     easyNote: 'גרסה קלה — קאפו בסריג 2 כדי לנגן עם המקור',
   },
   {
@@ -120,6 +221,7 @@ export const songs = [
     progression: ['C', 'G', 'Am', 'F'],
     bpm: 80,
     patternId: 'island',
+    category: 'international',
   },
   {
     id: 'faded',
@@ -129,6 +231,7 @@ export const songs = [
     progression: ['Ebm', 'B', 'Gb', 'Db'],
     bpm: 90,
     patternId: 'ballad',
+    category: 'international',
     easyProgression: ['Am', 'F', 'C', 'G'],
     easyNote: 'גרסה קלה — קאפו בסריג 6 כדי לנגן עם המקור',
   },
@@ -140,6 +243,7 @@ export const songs = [
     progression: ['Bbm', 'Gb', 'Db', 'Ab'],
     bpm: 77,
     patternId: 'ddu-udu',
+    category: 'international',
     easyProgression: ['Am', 'F', 'C', 'G'],
     easyNote: 'גרסה קלה — קאפו בסריג 1 כדי לנגן עם המקור',
   },
@@ -151,6 +255,7 @@ export const songs = [
     progression: ['Am', 'Dm', 'G', 'C'],
     bpm: 118,
     patternId: 'island',
+    category: 'international',
   },
   {
     id: 'believer',
@@ -160,6 +265,7 @@ export const songs = [
     progression: ['Bbm', 'Gb', 'F'],
     bpm: 125,
     patternId: 'ddu-udu',
+    category: 'international',
     easyProgression: ['Am', 'F', 'E'],
     easyNote: 'גרסה קלה — קאפו בסריג 1 כדי לנגן עם המקור',
   },
@@ -171,6 +277,7 @@ export const songs = [
     progression: ['G', 'D', 'Em', 'C'],
     bpm: 96,
     patternId: 'ballad',
+    category: 'international',
     note: 'פזמון',
   },
   {
@@ -181,6 +288,7 @@ export const songs = [
     progression: ['Bb', 'Gm', 'Eb', 'F'],
     bpm: 144,
     patternId: 'ballad',
+    category: 'international',
     easyProgression: ['G', 'Em', 'C', 'D'],
     easyNote: 'גרסה קלה — קאפו בסריג 3 כדי לנגן עם המקור',
   },
@@ -192,6 +300,7 @@ export const songs = [
     progression: ['Am', 'G', 'C'],
     bpm: 120,
     patternId: 'island',
+    category: 'international',
   },
   {
     id: 'shower',
@@ -201,6 +310,7 @@ export const songs = [
     progression: ['F', 'G', 'C', 'Am'],
     bpm: 120,
     patternId: 'island',
+    category: 'international',
   },
   {
     id: 'call-me-maybe',
@@ -210,6 +320,7 @@ export const songs = [
     progression: ['C', 'G', 'D', 'Em'],
     bpm: 120,
     patternId: 'ddu-udu',
+    category: 'international',
   },
   {
     id: 'shake-it-off',
@@ -219,6 +330,7 @@ export const songs = [
     progression: ['G', 'Am', 'C', 'C'],
     bpm: 160,
     patternId: 'ddu-udu',
+    category: 'international',
   },
   {
     id: 'stay',
@@ -228,6 +340,7 @@ export const songs = [
     progression: ['Bb', 'F', 'C', 'Dm'],
     bpm: 170,
     patternId: 'ddu-udu',
+    category: 'international',
     note: 'יש לשים קאפו (Capo) בסריג 1',
     easyProgression: ['G', 'D', 'A', 'Bm'],
     easyNote: 'גרסה קלה — קאפו בסריג 3 כדי לנגן עם המקור',
