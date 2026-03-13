@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { strumPatterns, difficultyLevels } from '../../data/strumPatterns';
 import StrumPattern from '../../components/StrumPattern/StrumPattern';
+import { useLocale } from '../../contexts/LocaleContext';
 import './Strumming.css';
 
 export default function Strumming() {
+  const { t, locale } = useLocale();
   const [activeDifficulty, setActiveDifficulty] = useState('all');
   const [expandedId, setExpandedId] = useState(null);
 
@@ -13,8 +15,8 @@ export default function Strumming() {
 
   return (
     <div className="page fade-in">
-      <h1 className="page__title">דפוסי פריטה</h1>
-      <p className="page__subtitle">למדו דפוסי פריטה שונים — מבסיסיים ועד מתקדמים</p>
+      <h1 className="page__title">{t('strumming.title')}</h1>
+      <p className="page__subtitle">{t('strumming.subtitle')}</p>
 
       <div className="strumming__filters">
         {difficultyLevels.map((level) => (
@@ -23,7 +25,7 @@ export default function Strumming() {
             className={`chip ${activeDifficulty === level.id ? 'chip--active' : ''}`}
             onClick={() => setActiveDifficulty(level.id)}
           >
-            {level.label}
+            {t(`strumming.${level.id}`)}
           </button>
         ))}
       </div>
@@ -35,17 +37,17 @@ export default function Strumming() {
             <div key={sp.id} className={`card strumming__card ${isExpanded ? 'strumming__card--expanded' : ''}`}>
               <div className="strumming__card-header" onClick={() => setExpandedId(isExpanded ? null : sp.id)}>
                 <div className="strumming__card-title-wrap">
-                  <h2 className="strumming__card-title">{sp.name}</h2>
-                  <span className="strumming__card-en">{sp.nameEn}</span>
+                  <h2 className="strumming__card-title">{locale === 'en' ? sp.nameEn : sp.name}</h2>
+                  <span className="strumming__card-en">{locale === 'en' ? sp.name : sp.nameEn}</span>
                 </div>
                 <div className="strumming__card-meta">
                   <span className={`strumming__difficulty strumming__difficulty--${sp.difficulty}`}>
-                    {sp.difficultyHe}
+                    {t(`strumming.${sp.difficulty}`)}
                   </span>
                   <span className="strumming__card-bpm">{sp.defaultBpm} BPM</span>
                 </div>
                 <span className={`theory__card-chevron ${isExpanded ? 'theory__card-chevron--open' : ''}`}>
-                  ◀
+                  {locale === 'en' ? '▶' : '◀'}
                 </span>
               </div>
 

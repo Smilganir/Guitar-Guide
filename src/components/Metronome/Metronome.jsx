@@ -1,7 +1,9 @@
 import useMetronome from './useMetronome';
+import { useLocale } from '../../contexts/LocaleContext';
 import './Metronome.css';
 
 export default function Metronome({ defaultBpm = 80, compact = false }) {
+  const { t } = useLocale();
   const { bpm, setBpm, isPlaying, currentBeat, toggle } = useMetronome(defaultBpm);
 
   return (
@@ -22,7 +24,7 @@ export default function Metronome({ defaultBpm = 80, compact = false }) {
         onClick={() => toggle(4)}
         className={`metronome__btn ${isPlaying ? 'metronome__btn--playing' : ''}`}
       >
-        {isPlaying ? '⏹ עצור' : '▶ הפעל'}
+        {isPlaying ? `⏹ ${t('songs.stop')}` : `▶ ${t('songs.play')}`}
       </button>
       {isPlaying && (
         <div className="metronome__beats">

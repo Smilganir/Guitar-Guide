@@ -26,6 +26,11 @@
   padding: 24px;
 }
 
+.theory__guide--ltr {
+  border-right: none;
+  border-left: 5px solid var(--guide-color);
+}
+
 .theory__guide-header {
   display: flex;
   align-items: center;
@@ -299,6 +304,11 @@
   cursor: pointer;
   border-right: 5px solid var(--topic-color);
   overflow: hidden;
+}
+
+.theory__card--ltr {
+  border-right: none;
+  border-left: 5px solid var(--topic-color);
 }
 
 .theory__card--expanded {

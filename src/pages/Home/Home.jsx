@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { chords } from '../../data/chords';
 import { songs } from '../../data/songs';
 import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
+import { useLocale } from '../../contexts/LocaleContext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useDailyGoal } from '../../hooks/useDailyGoal';
 import './Home.css';
 
 export default function Home() {
+  const { t, locale } = useLocale();
   const chordOfTheDay = useMemo(() => {
     const today = new Date();
     const dayIndex = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % chords.length;
@@ -38,12 +40,12 @@ export default function Home() {
   const goalRemaining = Math.max(0, Math.ceil((goalSeconds - seconds) / 60));
 
   const sections = [
-    { to: '/tuner', icon: '🎯', title: 'כוונון', desc: 'כוונו את הגיטרה עם מיקרופון או צליל ייחוס' },
-    { to: '/theory', icon: '📖', title: 'תיאוריה', desc: 'הבינו מה עומד מאחורי כל סוג אקורד' },
-    { to: '/chords', icon: '🎸', title: 'אקורדים', desc: 'למדו את כל האקורדים הבסיסיים עם דיאגרמות ברורות' },
-    { to: '/strumming', icon: '🎵', title: 'פריטה', desc: 'תרגלו דפוסי פריטה עם אנימציות ומטרונום' },
-    { to: '/songs', icon: '🎤', title: 'שירים', desc: 'נגנו יחד עם שירים — אקורדים, דפוס פריטה ומטרונום מסונכרנים' },
-    { to: '/practice', icon: '⏱️', title: 'תרגול', desc: 'אימון עם טיימר, תרגילי מעבר ומטרונום' },
+    { to: '/tuner', icon: '🎯', titleKey: 'tuner', descKey: 'tunerDesc' },
+    { to: '/theory', icon: '📖', titleKey: 'theory', descKey: 'theoryDesc' },
+    { to: '/chords', icon: '🎸', titleKey: 'chords', descKey: 'chordsDesc' },
+    { to: '/strumming', icon: '🎵', titleKey: 'strumming', descKey: 'strummingDesc' },
+    { to: '/songs', icon: '🎤', titleKey: 'songs', descKey: 'songsDesc' },
+    { to: '/practice', icon: '⏱️', titleKey: 'practice', descKey: 'practiceDesc' },
   ];
 
   const handleNameSave = () => {
@@ -57,7 +59,7 @@ export default function Home() {
     setGenderInput('');
   };
 
-  const readyText = userGender === 'm' ? 'מוכן' : 'מוכנה';
+  const helloKey = userGender === 'm' ? 'home.helloM' : 'home.helloF';
 
   return (
     <div className="page fade-in">
@@ -66,18 +68,18 @@ export default function Home() {
         {userName ? (
           <>
             <h1 className="home__title">
-              שלום {userName}, {readyText} לנגן? 🎸
+              {t(helloKey, { name: userName })}
             </h1>
             <button
               type="button"
               className="home__name-edit-btn"
               onClick={() => { setEditingName(true); setNameInput(userName); setGenderInput(userGender); }}
             >
-              שנה שם
+              {t('home.changeName')}
             </button>
           </>
         ) : (
-          <h1 className="home__title">ברוכים הבאים למדריך הגיטרה! 🎸</h1>
+          <h1 className="home__title">{t('home.welcome')}</h1>
         )}
 
         {(!userName || editingName) && (
@@ -85,7 +87,7 @@ export default function Home() {
             <input
               type="text"
               className="home__name-input"
-              placeholder="מה השם שלך?"
+              placeholder={t('home.namePlaceholder')}
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleNameSave(); }}
@@ -93,52 +95,52 @@ export default function Home() {
               autoFocus={editingName}
             />
             <div className="home__gender-row">
-              <span className="home__gender-label">איך לפנות אליך?</span>
+              <span className="home__gender-label">{t('home.howToAddress')}</span>
               <div className="home__gender-btns">
                 <button
                   type="button"
                   className={`home__gender-btn ${genderInput === 'm' ? 'home__gender-btn--on' : ''}`}
                   onClick={() => setGenderInput('m')}
                 >
-                  מצטרף
+                  {t('home.genderM')}
                 </button>
                 <button
                   type="button"
                   className={`home__gender-btn ${genderInput === 'f' ? 'home__gender-btn--on' : ''}`}
                   onClick={() => setGenderInput('f')}
                 >
-                  מצטרפת
+                  {t('home.genderF')}
                 </button>
               </div>
             </div>
             <div className="home__name-form-actions">
               <button type="button" className="home__name-save" onClick={handleNameSave}>
-                {editingName ? 'עדכון' : 'שמור'}
+                {editingName ? t('home.update') : t('home.save')}
               </button>
               {editingName && (
                 <button type="button" className="home__name-cancel" onClick={() => { setEditingName(false); setGenderInput(''); }}>
-                  ביטול
+                  {t('home.cancel')}
                 </button>
               )}
             </div>
           </div>
         )}
 
-        <p className="home__subtitle">כאן תלמדו אקורדים, תיאוריה, פריטה ותתרגלו — הכל במקום אחד</p>
+        <p className="home__subtitle">{t('home.subtitle')}</p>
       </div>
 
       {/* Personal strip: Daily Goal + Continue Playing */}
       <div className="home__personal-strip">
         {/* Daily Goal */}
         <div className="home__daily-goal card">
-          <h3>🎯 יעד יומי — 20 דקות</h3>
+          <h3>{t('home.dailyGoal')}</h3>
           <div className="home__daily-goal-bar">
             <div className="home__daily-goal-fill" style={{ width: `${goalPct}%` }} />
           </div>
           <p className="home__daily-goal-text">
             {goalPct >= 100
-              ? '🎉 כל הכבוד! השלמת את היעד היומי!'
-              : `תרגלת ${goalMinutes} דקות — נשארו ${goalRemaining} דקות`}
+              ? t('home.goalDone')
+              : t('home.goalProgress', { mins: goalMinutes, left: goalRemaining })}
           </p>
         </div>
 
@@ -147,8 +149,8 @@ export default function Home() {
           <Link to={`/songs?song=${lastSong.id}`} className="home__continue card">
             <span className="home__continue-icon">▶</span>
             <div className="home__continue-info">
-              <h3>המשך לנגן</h3>
-              <p>{lastSong.titleHe} — {lastSong.artist}</p>
+              <h3>{t('home.continuePlaying')}</h3>
+              <p>{(locale === 'en' ? lastSong.titleEn : lastSong.titleHe)} — {lastSong.artist}</p>
             </div>
           </Link>
         )}
@@ -157,11 +159,11 @@ export default function Home() {
       {/* Favorites */}
       {favSongs.length > 0 && (
         <div className="home__favorites">
-          <h3 className="home__favorites-title">❤️ המועדפים שלי</h3>
+          <h3 className="home__favorites-title">{t('home.myFavorites')}</h3>
           <div className="home__favorites-list">
             {favSongs.map((song) => (
               <Link key={song.id} to={`/songs?song=${song.id}`} className="home__favorites-item card">
-                <span className="home__favorites-item-title">{song.titleHe}</span>
+                <span className="home__favorites-item-title">{locale === 'en' ? song.titleEn : song.titleHe}</span>
                 <span className="home__favorites-item-artist">{song.artist}</span>
               </Link>
             ))}
@@ -171,7 +173,7 @@ export default function Home() {
 
       <div className="home__cotd card">
         <div className="home__cotd-text">
-          <h2>🌟 האקורד של היום</h2>
+          <h2>{t('home.chordOfDay')}</h2>
           <p className="home__cotd-name">{chordOfTheDay.name}</p>
           <p className="home__cotd-he">{chordOfTheDay.nameHe}</p>
         </div>
@@ -182,8 +184,8 @@ export default function Home() {
 
       {practiced.length > 0 && (
         <div className="home__progress card">
-          <h3>📊 ההתקדמות שלך</h3>
-          <p>תרגלת <strong>{practiced.length}</strong> מתוך <strong>{chords.length}</strong> אקורדים</p>
+          <h3>{t('home.yourProgress')}</h3>
+          <p>{t('home.practicedCount', { n: practiced.length, total: chords.length })}</p>
           <div className="home__progress-bar">
             <div
               className="home__progress-fill"
@@ -197,8 +199,8 @@ export default function Home() {
         {sections.map((section) => (
           <Link key={section.to} to={section.to} className="home__section card">
             <span className="home__section-icon">{section.icon}</span>
-            <h3>{section.title}</h3>
-            <p>{section.desc}</p>
+            <h3>{t(`nav.${section.titleKey}`)}</h3>
+            <p>{t(`home.${section.descKey}`)}</p>
           </Link>
         ))}
       </div>

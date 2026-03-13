@@ -6,11 +6,13 @@ import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
 import '../../components/StrumPattern/StrumPattern.css';
 import { useChordSound } from '../../hooks/useChordSound';
 import { useSongPlayer } from '../../hooks/useSongPlayer';
+import { useLocale } from '../../contexts/LocaleContext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useDailyGoal } from '../../hooks/useDailyGoal';
 import './Songs.css';
 
 export default function Songs() {
+  const { t, locale } = useLocale();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedSong, setSelectedSong] = useState(() => {
     const songId = searchParams.get('song');
@@ -88,7 +90,7 @@ export default function Songs() {
       {/* Sidebar */}
       <aside className="songs__sidebar">
         <div className="songs__sidebar-header">
-          <h2 className="songs__sidebar-title">שירים</h2>
+          <h2 className="songs__sidebar-title">{t('songs.title')}</h2>
           <span className="songs__sidebar-count">{filteredSongs.length}</span>
         </div>
         <div className="songs__sidebar-search-wrap">
@@ -96,7 +98,7 @@ export default function Songs() {
           <input
             type="text"
             className="songs__sidebar-search"
-            placeholder="חיפוש שיר או אמן..."
+            placeholder={t('songs.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -116,12 +118,12 @@ export default function Songs() {
                 }}
               >
                 <span className="songs__sidebar-item-row">
-                  <span className="songs__sidebar-item-title">{song.titleHe}</span>
+                  <span className="songs__sidebar-item-title">{locale === 'en' ? song.titleEn : song.titleHe}</span>
                   <span className="songs__sidebar-item-artist">{song.artist}</span>
                 </span>
                 <span className="songs__sidebar-item-meta">
                   {song.bpm} BPM
-                  {sp && <span className="songs__sidebar-item-strum"> · {sp.name}</span>}
+                  {sp && <span className="songs__sidebar-item-strum"> · {locale === 'en' ? sp.nameEn : sp.name}</span>}
                 </span>
                 <span className="songs__sidebar-item-actions">
                   {song.easyProgression && (
@@ -133,7 +135,7 @@ export default function Songs() {
                     tabIndex={0}
                     onClick={(e) => { e.stopPropagation(); toggleFavorite(song.id); }}
                     onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); toggleFavorite(song.id); } }}
-                    title={isFav ? 'הסר ממועדפים' : 'הוסף למועדפים'}
+                    title={isFav ? t('songs.removeFromFav') : t('songs.addToFav')}
                   >
                     {isFav ? '❤️' : '🤍'}
                   </span>
@@ -142,7 +144,7 @@ export default function Songs() {
             );
           })}
           {filteredSongs.length === 0 && (
-            <p className="songs__sidebar-empty">לא נמצאו שירים</p>
+            <p className="songs__sidebar-empty">{t('songs.noSongs')}</p>
           )}
         </div>
       </aside>
@@ -152,15 +154,15 @@ export default function Songs() {
         {!activeSong ? (
           <div className="songs__empty-state">
             <span className="songs__empty-state-icon">🎸</span>
-            <h2>בחרו שיר מהרשימה</h2>
-            <p>לחצו על שיר בצד כדי להתחיל לנגן</p>
+            <h2>{t('songs.selectSong')}</h2>
+            <p>{t('songs.selectSongHint')}</p>
           </div>
         ) : (
           <div className="songs__player">
             {/* Header row */}
             <div className="songs__player-header">
               <div className="songs__player-header-info">
-                <h2 className="songs__player-title">{activeSong.titleHe}</h2>
+                <h2 className="songs__player-title">{locale === 'en' ? activeSong.titleEn : activeSong.titleHe}</h2>
                 <p className="songs__player-subtitle">
                   {activeSong.titleEn !== activeSong.titleHe && `${activeSong.titleEn} · `}
                   {activeSong.artist}
@@ -173,7 +175,7 @@ export default function Songs() {
                   tabIndex={0}
                   onClick={() => toggleFavorite(selectedSong.id)}
                   onKeyDown={(e) => { if (e.key === 'Enter') toggleFavorite(selectedSong.id); }}
-                  title={favorites.includes(selectedSong.id) ? 'הסר ממועדפים' : 'הוסף למועדפים'}
+                  title={favorites.includes(selectedSong.id) ? t('songs.removeFromFav') : t('songs.addToFav')}
                 >
                   {favorites.includes(selectedSong.id) ? '❤️' : '🤍'}
                 </span>
@@ -186,7 +188,7 @@ export default function Songs() {
                       setEasyMode(!easyMode);
                     }}
                   >
-                    {easyMode ? '🎓 מקורית' : '⭐ קלה'}
+                    {easyMode ? `🎓 ${t('songs.original')}` : `⭐ ${t('songs.easy')}`}
                   </button>
                 )}
               </div>
@@ -215,7 +217,7 @@ export default function Songs() {
             {/* Chord spotlight */}
             <div className="songs__spotlight" dir="ltr">
               <div className="songs__spotlight-current">
-                <span className="songs__spotlight-label">עכשיו</span>
+                <span className="songs__spotlight-label">{t('songs.now')}</span>
                 <span className="songs__spotlight-chord-name">
                   {activeSong.progression[player.chordIndex]}
                 </span>
@@ -227,7 +229,7 @@ export default function Songs() {
               </div>
               <div className="songs__spotlight-arrow" aria-hidden>→</div>
               <div className="songs__spotlight-next">
-                <span className="songs__spotlight-label">הבא</span>
+                <span className="songs__spotlight-label">{t('songs.next')}</span>
                 <span className="songs__spotlight-next-name">
                   {activeSong.progression[nextChordIndex]}
                 </span>
@@ -258,7 +260,7 @@ export default function Songs() {
             {/* Strum pattern arrows */}
             {patternDef && (
               <div className="songs__player-strum">
-                <p className="songs__player-strum-label">{patternDef.name}</p>
+                <p className="songs__player-strum-label">{locale === 'en' ? patternDef.nameEn : patternDef.name}</p>
                 <div className="songs__player-strum-arrows">
                   {patternDef.pattern.map((item, i) => (
                     <div
@@ -281,7 +283,7 @@ export default function Songs() {
             {player.phase === 'countin' && (
               <div className="songs__player-countin">
                 <span className="songs__player-countin-num">{player.countInBeat + 1}</span>
-                <span className="songs__player-countin-text">הכנה...</span>
+                <span className="songs__player-countin-text">{t('songs.preparing')}</span>
               </div>
             )}
 
@@ -311,7 +313,7 @@ export default function Songs() {
                   onChange={(e) => player.setLoop(e.target.checked)}
                   disabled={player.phase === 'playing' || player.phase === 'countin'}
                 />
-                <span>לופ</span>
+                <span>{t('songs.loop')}</span>
               </label>
 
               <button
@@ -319,7 +321,7 @@ export default function Songs() {
                 className={`songs__settings-play-btn ${player.phase === 'playing' || player.phase === 'countin' ? 'songs__settings-play-btn--stop' : ''}`}
                 onClick={() => (player.phase === 'playing' || player.phase === 'countin' ? player.stop() : player.start())}
               >
-                {player.phase === 'countin' ? 'מתחיל...' : player.phase === 'playing' ? '⏹ עצור' : '▶ הפעל'}
+                {player.phase === 'countin' ? t('songs.starting') : player.phase === 'playing' ? t('songs.stop') : t('songs.play')}
               </button>
             </div>
           </div>

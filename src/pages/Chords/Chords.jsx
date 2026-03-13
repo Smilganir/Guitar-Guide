@@ -3,9 +3,13 @@ import { chords, chordTypes } from '../../data/chords';
 import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
 import LeftHandFingers from '../../components/LeftHandFingers/LeftHandFingers';
 import { useChordSound } from '../../hooks/useChordSound';
+import { useLocale } from '../../contexts/LocaleContext';
 import './Chords.css';
 
+const chordTypeKey = { '7': 'seventh', maj7: 'maj7', add9: 'add9' };
+
 export default function Chords() {
+  const { t } = useLocale();
   const [activeType, setActiveType] = useState('all');
   const [selectedChord, setSelectedChord] = useState(null);
   const { playChord } = useChordSound();
@@ -21,8 +25,8 @@ export default function Chords() {
     <div className="page fade-in">
       <div className="chords__header">
         <div>
-          <h1 className="page__title">אקורדים</h1>
-          <p className="page__subtitle">לחצו על אקורד כדי לראות אותו בגדול</p>
+          <h1 className="page__title">{t('chords.title')}</h1>
+          <p className="page__subtitle">{t('chords.subtitle')}</p>
         </div>
         <LeftHandFingers />
       </div>
@@ -34,7 +38,7 @@ export default function Chords() {
             className={`chip ${activeType === type.id ? 'chip--active' : ''}`}
             onClick={() => setActiveType(type.id)}
           >
-            {type.label}
+            {t(`chords.${chordTypeKey[type.id] || type.id}`)}
           </button>
         ))}
       </div>
@@ -70,7 +74,7 @@ export default function Chords() {
               className="chords__modal-play"
               onClick={(e) => { e.stopPropagation(); playChord(selectedChord); }}
             >
-              ▶ השמע אקורד
+              {t('chords.playChord')}
             </button>
 
             <h2 className="chords__modal-name">{selectedChord.name}</h2>

@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { FINGER_COLORS } from '../../constants/fingerColors';
+import { useLocale } from '../../contexts/LocaleContext';
 import './LeftHandFingers.css';
-
-const FINGER_NAMES = {
-  1: 'מורה',
-  2: 'אמה',
-  3: 'קמיצה',
-  4: 'זרת',
-};
 
 // Left hand, inner palm facing viewer (guitarist's POV looking down at fretting hand)
 // Index (1) on the left, pinky (4) on the right, thumb on left edge
@@ -20,7 +14,10 @@ const FINGERS = [
 
 const FW = 12; // finger width
 
+const FINGER_KEYS = { 1: 'finger1', 2: 'finger2', 3: 'finger3', 4: 'finger4' };
+
 export default function LeftHandFingers() {
+  const { t } = useLocale();
   const [open, setOpen] = useState(false);
 
   return (
@@ -29,7 +26,7 @@ export default function LeftHandFingers() {
         className="finger-legend__toggle"
         onClick={() => setOpen((o) => !o)}
       >
-        <span>🖐 מקרא אצבעות</span>
+        <span>🖐 {t('chords.fingerLegend')}</span>
         <span className={`finger-legend__chevron ${open ? 'finger-legend__chevron--open' : ''}`}>
           ▼
         </span>
@@ -120,7 +117,7 @@ export default function LeftHandFingers() {
                 >
                   {id}
                 </span>
-                <span className="finger-legend__key-name">{FINGER_NAMES[id]}</span>
+                <span className="finger-legend__key-name">{t(`chords.${FINGER_KEYS[id]}`)}</span>
               </div>
             ))}
           </div>

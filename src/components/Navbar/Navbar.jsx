@@ -1,25 +1,28 @@
 import { NavLink } from 'react-router-dom';
+import { useLocale } from '../../contexts/LocaleContext';
 import './Navbar.css';
 
-const links = [
-  { to: '/', label: 'בית', icon: '🏠' },
-  { to: '/tuner', label: 'כוונון', icon: '🎯' },
-  { to: '/theory', label: 'תיאוריה', icon: '📖' },
-  { to: '/chords', label: 'אקורדים', icon: '🎸' },
-  { to: '/strumming', label: 'פריטה', icon: '🎵' },
-  { to: '/songs', label: 'שירים', icon: '🎤' },
-  { to: '/practice', label: 'תרגול', icon: '⏱️' },
+const linkKeys = [
+  { to: '/', key: 'home', icon: '🏠' },
+  { to: '/tuner', key: 'tuner', icon: '🎯' },
+  { to: '/theory', key: 'theory', icon: '📖' },
+  { to: '/chords', key: 'chords', icon: '🎸' },
+  { to: '/strumming', key: 'strumming', icon: '🎵' },
+  { to: '/songs', key: 'songs', icon: '🎤' },
+  { to: '/practice', key: 'practice', icon: '⏱️' },
 ];
 
 export default function Navbar() {
+  const { t, locale, toggleLocale } = useLocale();
+
   return (
     <nav className="navbar">
       <div className="navbar__brand">
         <span className="navbar__logo">🎸</span>
-        <span className="navbar__title">מדריך גיטרה</span>
+        <span className="navbar__title">{t('nav.brand')}</span>
       </div>
       <div className="navbar__links">
-        {links.map((link) => (
+        {linkKeys.map((link) => (
           <NavLink
             key={link.to}
             to={link.to}
@@ -29,9 +32,17 @@ export default function Navbar() {
             end={link.to === '/'}
           >
             <span className="navbar__link-icon">{link.icon}</span>
-            <span className="navbar__link-label">{link.label}</span>
+            <span className="navbar__link-label">{t(`nav.${link.key}`)}</span>
           </NavLink>
         ))}
+        <button
+          type="button"
+          className="navbar__lang-toggle"
+          onClick={toggleLocale}
+          title={locale === 'he' ? 'Switch to English' : 'עבור לעברית'}
+        >
+          {locale === 'he' ? 'EN' : 'עב'}
+        </button>
       </div>
     </nav>
   );

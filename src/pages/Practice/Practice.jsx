@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { chords } from '../../data/chords';
 import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
 import Metronome from '../../components/Metronome/Metronome';
+import { useLocale } from '../../contexts/LocaleContext';
 import './Practice.css';
 
 function getRandomChord(exclude = null) {
@@ -10,6 +11,7 @@ function getRandomChord(exclude = null) {
 }
 
 function PracticeTimer() {
+  const { t } = useLocale();
   const [duration, setDuration] = useState(5);
   const [remaining, setRemaining] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -50,10 +52,10 @@ function PracticeTimer() {
 
   return (
     <div className="practice__timer card">
-      <h2>⏱️ טיימר תרגול</h2>
+      <h2>{t('practice.timer')}</h2>
       {!isRunning && remaining === null && (
         <div className="practice__timer-setup">
-          <p>כמה דקות לתרגל?</p>
+          <p>{t('practice.howManyMins')}</p>
           <div className="practice__timer-buttons">
             {[3, 5, 10, 15].map((mins) => (
               <button
@@ -61,12 +63,12 @@ function PracticeTimer() {
                 className={`chip ${duration === mins ? 'chip--active' : ''}`}
                 onClick={() => setDuration(mins)}
               >
-                {mins} דק׳
+                {mins} {t('practice.mins')}
               </button>
             ))}
           </div>
           <button className="practice__start-btn" onClick={startTimer}>
-            ▶ התחל תרגול
+            {t('practice.startPractice')}
           </button>
         </div>
       )}
@@ -77,11 +79,11 @@ function PracticeTimer() {
           </div>
           {remaining === 0 ? (
             <div className="practice__timer-done">
-              <p>🎉 כל הכבוד! סיימת את התרגול!</p>
-              <button className="practice__start-btn" onClick={stopTimer}>שוב</button>
+              <p>{t('practice.done')}</p>
+              <button className="practice__start-btn" onClick={stopTimer}>{t('practice.again')}</button>
             </div>
           ) : (
-            <button className="practice__stop-btn" onClick={stopTimer}>⏹ עצור</button>
+            <button className="practice__stop-btn" onClick={stopTimer}>⏹ {t('songs.stop')}</button>
           )}
         </div>
       )}
@@ -110,8 +112,8 @@ function ChordDrill() {
 
   return (
     <div className="practice__drill card">
-      <h2>🔄 תרגיל מעברים</h2>
-      <p className="practice__drill-desc">תרגלו מעבר בין שני אקורדים — חליפו בכל פעימה של המטרונום</p>
+      <h2>🔄 {t('practice.chordTransition')}</h2>
+      <p className="practice__drill-desc">{t('practice.chordTransitionDesc')}</p>
 
       <div className="practice__drill-chords">
         <div className="practice__drill-chord">
@@ -120,7 +122,7 @@ function ChordDrill() {
             className={`practice__practiced-btn ${practiced.includes(chord1.id) ? 'practice__practiced-btn--done' : ''}`}
             onClick={() => markPracticed(chord1.id)}
           >
-            {practiced.includes(chord1.id) ? '✓ תורגל' : 'סמן כתורגל'}
+            {practiced.includes(chord1.id) ? t('practice.practiced') : t('practice.markPracticed')}
           </button>
         </div>
         <div className="practice__drill-arrow">⟷</div>
@@ -130,19 +132,20 @@ function ChordDrill() {
             className={`practice__practiced-btn ${practiced.includes(chord2.id) ? 'practice__practiced-btn--done' : ''}`}
             onClick={() => markPracticed(chord2.id)}
           >
-            {practiced.includes(chord2.id) ? '✓ תורגל' : 'סמן כתורגל'}
+            {practiced.includes(chord2.id) ? t('practice.practiced') : t('practice.markPracticed')}
           </button>
         </div>
       </div>
 
       <button className="practice__new-drill-btn" onClick={newDrill}>
-        🎲 אקורדים חדשים
+        {t('practice.newChords')}
       </button>
     </div>
   );
 }
 
 function ProgressTracker() {
+  const { t } = useLocale();
   const practiced = JSON.parse(localStorage.getItem('practiced') || '[]');
 
   const clearProgress = () => {
@@ -152,8 +155,8 @@ function ProgressTracker() {
 
   return (
     <div className="practice__progress card">
-      <h2>📊 התקדמות</h2>
-      <p>תרגלת <strong>{practiced.length}</strong> מתוך <strong>{chords.length}</strong> אקורדים</p>
+      <h2>{t('practice.progress')}</h2>
+      <p>{t('practice.practicedOf', { n: practiced.length, total: chords.length })}</p>
       <div className="practice__progress-bar">
         <div
           className="practice__progress-fill"
@@ -172,7 +175,7 @@ function ProgressTracker() {
       </div>
       {practiced.length > 0 && (
         <button className="practice__clear-btn" onClick={clearProgress}>
-          🗑️ אפס התקדמות
+          {t('practice.clearProgress')}
         </button>
       )}
     </div>
@@ -180,15 +183,16 @@ function ProgressTracker() {
 }
 
 export default function Practice() {
+  const { t } = useLocale();
   return (
     <div className="page fade-in">
-      <h1 className="page__title">תרגול</h1>
-      <p className="page__subtitle">הגיע הזמן לתרגל! בחרו כלי תרגול והתחילו</p>
+      <h1 className="page__title">{t('practice.title')}</h1>
+      <p className="page__subtitle">{t('practice.subtitle')}</p>
 
       <div className="practice__layout">
         <PracticeTimer />
         <div className="practice__metronome-section card">
-          <h2>🥁 מטרונום</h2>
+          <h2>{t('practice.metronome')}</h2>
           <Metronome defaultBpm={80} />
         </div>
         <ChordDrill />
