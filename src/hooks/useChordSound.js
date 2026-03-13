@@ -1,7 +1,7 @@
 import { useRef, useCallback } from 'react';
 import { chordToNotes } from '../utils/noteUtils';
 
-const STRUM_DELAY_MS = 38;
+const STRUM_GAP_MS = 30;
 const BASE = import.meta.env.BASE_URL || '/';
 
 const bufferCache = new Map();
@@ -12,7 +12,7 @@ function getContext() {
   return sharedContext;
 }
 
-function playSynthNote(ctx, frequency, startTime, duration = 1.2) {
+function playSynthNote(ctx, frequency, startTime, duration = 1.2, peak = 0.12) {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
@@ -20,7 +20,7 @@ function playSynthNote(ctx, frequency, startTime, duration = 1.2) {
   osc.type = 'triangle';
   osc.frequency.value = frequency;
   gain.gain.setValueAtTime(0, startTime);
-  gain.gain.linearRampToValueAtTime(0.12, startTime + 0.02);
+  gain.gain.linearRampToValueAtTime(peak, startTime + 0.02);
   gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
   osc.start(startTime);
   osc.stop(startTime + duration);
@@ -67,19 +67,27 @@ export function useChordSound() {
 
     const notes = chordToNotes(chord);
     const now = ctx.currentTime;
+    const strumDir = options.strumDir || 'D';
+    const isUp = strumDir === 'U';
 
-    // Load all samples in parallel, then schedule playback with strum delay
+    const bufGain = isUp ? 0.4 : 0.5;
+    const synthPeak = isUp ? 0.09 : 0.12;
+    const synthDuration = isUp ? 0.9 : 1.2;
+
     const results = await Promise.all(
       notes.map(async (n) => ({ ...n, buffer: await loadSample(ctx, n.fileName) }))
     );
 
-    results.forEach(({ buffer, frequency, delayMs }) => {
+    const ordered = isUp ? [...results].reverse() : results;
+    ordered.forEach((note, idx) => { note.delayMs = idx * STRUM_GAP_MS; });
+
+    ordered.forEach(({ buffer, frequency, delayMs }) => {
       const startTime = now + (delayMs / 1000);
-      if (buffer) playBuffer(ctx, buffer, startTime);
-      else playSynthNote(ctx, frequency, startTime);
+      if (buffer) playBuffer(ctx, buffer, startTime, bufGain);
+      else playSynthNote(ctx, frequency, startTime, synthDuration, synthPeak);
     });
 
-    setTimeout(() => { playingRef.current = false; }, 1200);
+    setTimeout(() => { playingRef.current = false; }, 200);
   }, []);
 
   return { playChord };

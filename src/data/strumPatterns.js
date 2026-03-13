@@ -45,7 +45,7 @@ export const strumPatterns = [
   },
   {
     id: 'ddu-udu',
-    name: 'למטה למטה למעלה - למעלה למטה למעלה',
+    name: 'D-D-U-U-D-U',
     nameEn: 'D-D-U-U-D-U',
     difficulty: 'intermediate',
     difficultyHe: 'בינוני',
@@ -65,7 +65,7 @@ export const strumPatterns = [
   },
   {
     id: 'island',
-    name: 'דפוס אי-סטייל',
+    name: 'פריטת איים',
     nameEn: 'Island Strum',
     difficulty: 'intermediate',
     difficultyHe: 'בינוני',

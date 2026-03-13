@@ -24,13 +24,15 @@ export function useSongPlayer(song, playChord) {
   const [countInBeat, setCountInBeat] = useState(-1);
   const [chordIndex, setChordIndex] = useState(0);
   const [strumIndex, setStrumIndex] = useState(-1);
-  const [loop, setLoop] = useState(false);
+  const [beatInBar, setBeatInBar] = useState(0);
+  const [loop, setLoop] = useState(true);
   const [bpmOffset, setBpmOffset] = useState(0); // -20 to +20 from song.bpm
 
   const startTimeRef = useRef(null);
   const tickRef = useRef(null);
   const countInTimeoutsRef = useRef([]);
   const lastChordIndexRef = useRef(-1);
+  const lastStrumIndexRef = useRef(-1);
 
   const pattern = song ? strumPatterns.find((p) => p.id === song.patternId)?.pattern || [] : [];
   const chordObjects = song ? song.progression.map((id) => getChordById(id)).filter(Boolean) : [];
@@ -44,14 +46,16 @@ export function useSongPlayer(song, playChord) {
     setCountInBeat(-1);
     setChordIndex(0);
     setStrumIndex(-1);
+    setBeatInBar(0);
     lastChordIndexRef.current = -1;
+    lastStrumIndexRef.current = -1;
   }, []);
 
   const start = useCallback(() => {
     if (!song || !playChord) return;
     stop();
 
-    const effectiveBpm = Math.max(40, Math.min(200, song.bpm + bpmOffset));
+    const effectiveBpm = Math.max(50, Math.min(200, song.bpm + bpmOffset));
     const beatMs = 60000 / effectiveBpm;
 
     setPhase('countin');
@@ -72,11 +76,8 @@ export function useSongPlayer(song, playChord) {
       setCountInBeat(-1);
       startTimeRef.current = Date.now();
       lastChordIndexRef.current = -1;
+      lastStrumIndexRef.current = -1;
 
-      const chord0 = getChordById(song.progression[0]);
-      if (chord0) playChord(chord0, { force: true });
-
-      const barMs = beatMs * 4;
       const progressionBeats = song.progression.length * 4;
 
       tickRef.current = setInterval(() => {
@@ -89,13 +90,13 @@ export function useSongPlayer(song, playChord) {
         playbackBeat = playbackBeat % progressionBeats;
         const barIndex = Math.floor(playbackBeat / 4);
         const ci = barIndex % song.progression.length;
-        const beatInBar = playbackBeat - barIndex * 4;
-        const currentBeat1Based = beatInBar + 1;
+        const bib = playbackBeat - barIndex * 4;
+        const currentBeat1Based = bib + 1;
+        setBeatInBar(bib);
 
         if (ci !== lastChordIndexRef.current) {
           lastChordIndexRef.current = ci;
-          const chord = getChordById(song.progression[ci]);
-          if (chord) playChord(chord, { force: true });
+          lastStrumIndexRef.current = -1;
         }
 
         setChordIndex(ci);
@@ -108,6 +109,15 @@ export function useSongPlayer(song, playChord) {
           }
         }
         setStrumIndex(si);
+
+        if (si >= 0 && si !== lastStrumIndexRef.current) {
+          lastStrumIndexRef.current = si;
+          const strum = pattern[si];
+          if (!strum.isGhost && strum.type !== 'x') {
+            const chord = getChordById(song.progression[ci]);
+            if (chord) playChord(chord, { force: true, strumDir: strum.type });
+          }
+        }
       }, 50);
     }, 4 * beatMs);
 
@@ -125,13 +135,14 @@ export function useSongPlayer(song, playChord) {
     setBpmOffset(0);
   }, [song?.id]);
 
-  const effectiveBpm = song ? Math.max(40, Math.min(200, song.bpm + bpmOffset)) : null;
+  const effectiveBpm = song ? Math.max(50, Math.min(200, song.bpm + bpmOffset)) : null;
 
   return {
     phase,
     countInBeat,
     chordIndex,
     strumIndex,
+    beatInBar,
     loop,
     setLoop,
     bpmOffset,

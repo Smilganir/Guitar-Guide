@@ -1,0 +1,266 @@
+.page-tuner {
+  padding-bottom: 48px;
+}
+
+.tuner__section-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+}
+
+/* Reference strings */
+.tuner__strings {
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.tuner__strings-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  direction: ltr;
+}
+
+.tuner__string-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 12px;
+  min-width: 72px;
+  border: 2px solid var(--bg-secondary);
+  border-radius: 14px;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-family);
+}
+
+.tuner__string-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.tuner__string-btn--active {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.tuner__string-btn--active .tuner__string-note,
+.tuner__string-btn--active .tuner__string-label,
+.tuner__string-btn--active .tuner__string-hz {
+  color: white;
+}
+
+.tuner__string-btn--detected {
+  box-shadow: 0 0 0 3px var(--success);
+}
+
+.tuner__string-note {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--accent-dark);
+}
+
+.tuner__string-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.tuner__string-hz {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+/* Mic section */
+.tuner__mic {
+  padding: 24px;
+}
+
+.tuner__mic-btn {
+  display: block;
+  margin: 0 auto 20px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 24px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  transition: all 0.2s;
+}
+
+.tuner__mic-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.tuner__mic-btn--active {
+  background: var(--danger);
+  animation: tuner-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes tuner-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(211, 93, 93, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(211, 93, 93, 0); }
+}
+
+.tuner__mic-error {
+  text-align: center;
+  color: var(--danger);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Display */
+.tuner__display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+}
+
+.tuner__note-name {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.tuner__note-name--in-tune { color: var(--success); }
+.tuner__note-name--close { color: var(--warning); }
+.tuner__note-name--off { color: var(--danger); }
+
+/* Gauge */
+.tuner__gauge {
+  width: 100%;
+  max-width: 320px;
+}
+
+.tuner__gauge-track {
+  position: relative;
+}
+
+.tuner__gauge-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  direction: ltr;
+}
+
+.tuner__gauge-bar {
+  position: relative;
+  height: 12px;
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  overflow: visible;
+}
+
+.tuner__gauge-center {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  width: 2px;
+  height: 16px;
+  background: var(--text-secondary);
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+.tuner__gauge-needle {
+  position: absolute;
+  top: -4px;
+  width: 10px;
+  height: 20px;
+  border-radius: 5px;
+  transform: translateX(-50%);
+  transition: left 0.08s ease-out;
+}
+
+.tuner__gauge-needle--in-tune { background: var(--success); }
+.tuner__gauge-needle--close { background: var(--warning); }
+.tuner__gauge-needle--off { background: var(--danger); }
+
+.tuner__cents {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: monospace;
+  direction: ltr;
+}
+
+.tuner__cents--in-tune { color: var(--success); }
+.tuner__cents--close { color: var(--warning); }
+.tuner__cents--off { color: var(--danger); }
+
+.tuner__status {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.tuner__status--in-tune { color: var(--success); }
+.tuner__status--close { color: var(--warning); }
+.tuner__status--off { color: var(--text-secondary); }
+
+.tuner__closest-string {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.tuner__freq {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.tuner__waiting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 20px 0;
+}
+
+.tuner__waiting-icon {
+  font-size: 2.5rem;
+  animation: tuner-bounce 1.2s ease-in-out infinite;
+}
+
+@keyframes tuner-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (max-width: 600px) {
+  .tuner__strings-row {
+    gap: 8px;
+  }
+
+  .tuner__string-btn {
+    min-width: 58px;
+    padding: 10px 8px;
+  }
+
+  .tuner__note-name {
+    font-size: 3rem;
+  }
+
+  .tuner__gauge {
+    max-width: 260px;
+  }
+}

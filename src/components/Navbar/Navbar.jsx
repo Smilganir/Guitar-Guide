@@ -3,8 +3,9 @@ import './Navbar.css';
 
 const links = [
   { to: '/', label: 'בית', icon: '🏠' },
-  { to: '/chords', label: 'אקורדים', icon: '🎸' },
+  { to: '/tuner', label: 'כוונון', icon: '🎯' },
   { to: '/theory', label: 'תיאוריה', icon: '📖' },
+  { to: '/chords', label: 'אקורדים', icon: '🎸' },
   { to: '/strumming', label: 'פריטה', icon: '🎵' },
   { to: '/songs', label: 'שירים', icon: '🎤' },
   { to: '/practice', label: 'תרגול', icon: '⏱️' },
