@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { songs } from '../../data/songs';
 import { strumPatterns } from '../../data/strumPatterns';
 import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
@@ -10,7 +11,12 @@ import { useDailyGoal } from '../../hooks/useDailyGoal';
 import './Songs.css';
 
 export default function Songs() {
-  const [selectedSong, setSelectedSong] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedSong, setSelectedSong] = useState(() => {
+    const songId = searchParams.get('song');
+    if (songId) return songs.find((s) => s.id === songId) || null;
+    return null;
+  });
   const [easyMode, setEasyMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { playChord } = useChordSound();
@@ -33,7 +39,10 @@ export default function Songs() {
     if (selectedSong) {
       setLastPlayed({ songId: selectedSong.id, timestamp: Date.now() });
     }
-  }, [selectedSong, setLastPlayed]);
+    if (searchParams.get('song')) {
+      setSearchParams({}, { replace: true });
+    }
+  }, [selectedSong, setLastPlayed, searchParams, setSearchParams]);
 
   useEffect(() => {
     markActive(player.phase === 'playing');

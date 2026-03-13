@@ -117,7 +117,7 @@ export default function Home() {
 
         {/* Continue Playing */}
         {lastSong && (
-          <Link to="/songs" className="home__continue card">
+          <Link to={`/songs?song=${lastSong.id}`} className="home__continue card">
             <span className="home__continue-icon">▶</span>
             <div className="home__continue-info">
               <h3>המשך לנגן</h3>
