@@ -53,7 +53,11 @@ export default function Strumming() {
                 <div className="strumming__card-body fade-in">
                   <p className="strumming__desc">{sp.description}</p>
 
-                  <StrumPattern pattern={sp.pattern} defaultBpm={sp.defaultBpm} />
+                  <StrumPattern
+                    pattern={sp.pattern}
+                    defaultBpm={sp.defaultBpm}
+                    beatsPerMeasure={sp.beatsPerMeasure ?? 4}
+                  />
 
                   <div className="strumming__tip">
                     <span className="strumming__tip-icon">💡</span>

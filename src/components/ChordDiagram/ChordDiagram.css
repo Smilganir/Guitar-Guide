@@ -2,7 +2,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transform-origin: top center;
 }
 
 .chord-diagram svg {

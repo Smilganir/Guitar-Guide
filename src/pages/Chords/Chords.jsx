@@ -1,20 +1,31 @@
 import { useState } from 'react';
 import { chords, chordTypes } from '../../data/chords';
 import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
+import LeftHandFingers from '../../components/LeftHandFingers/LeftHandFingers';
+import { useChordSound } from '../../hooks/useChordSound';
 import './Chords.css';
 
 export default function Chords() {
   const [activeType, setActiveType] = useState('all');
   const [selectedChord, setSelectedChord] = useState(null);
+  const { playChord } = useChordSound();
 
-  const filtered = activeType === 'all'
-    ? chords
-    : chords.filter((c) => c.type === activeType);
+  const filtered =
+    activeType === 'all'
+      ? chords
+      : activeType === 'barre'
+        ? chords.filter((c) => c.barres?.length > 0)
+        : chords.filter((c) => c.type === activeType);
 
   return (
     <div className="page fade-in">
-      <h1 className="page__title">אקורדים</h1>
-      <p className="page__subtitle">לחצו על אקורד כדי לראות אותו בגדול</p>
+      <div className="chords__header">
+        <div>
+          <h1 className="page__title">אקורדים</h1>
+          <p className="page__subtitle">לחצו על אקורד כדי לראות אותו בגדול</p>
+        </div>
+        <LeftHandFingers />
+      </div>
 
       <div className="chords__filters">
         {chordTypes.map((type) => (
@@ -33,9 +44,13 @@ export default function Chords() {
           <div
             key={chord.id}
             className={`card chords__card ${selectedChord?.id === chord.id ? 'chords__card--selected' : ''}`}
-            onClick={() => setSelectedChord(selectedChord?.id === chord.id ? null : chord)}
+            onClick={() => {
+              const next = selectedChord?.id === chord.id ? null : chord;
+              setSelectedChord(next);
+              if (next) playChord(next);
+            }}
           >
-            <ChordDiagram chord={chord} />
+            <ChordDiagram chord={chord} coloredFingers />
             <div className="chords__card-info">
               <span className="chords__card-type">{chord.typeHe}</span>
             </div>
@@ -47,15 +62,19 @@ export default function Chords() {
         <div className="chords__modal-overlay" onClick={() => setSelectedChord(null)}>
           <div className="chords__modal card" onClick={(e) => e.stopPropagation()}>
             <button className="chords__modal-close" onClick={() => setSelectedChord(null)}>✕</button>
-            <ChordDiagram chord={selectedChord} size={2} />
+
+            <ChordDiagram chord={selectedChord} size={2} coloredFingers showNotes />
+
+            <button
+              type="button"
+              className="chords__modal-play"
+              onClick={(e) => { e.stopPropagation(); playChord(selectedChord); }}
+            >
+              ▶ השמע אקורד
+            </button>
+
             <h2 className="chords__modal-name">{selectedChord.name}</h2>
             <p className="chords__modal-he">{selectedChord.nameHe}</p>
-            <div className="chords__modal-notes">
-              <span className="chords__modal-label">נוטות:</span>
-              <span className="chords__modal-note-list" dir="ltr">
-                {selectedChord.notes.join(' - ')}
-              </span>
-            </div>
             <div className="chords__modal-type">
               <span className="chip chip--active">{selectedChord.typeHe}</span>
             </div>

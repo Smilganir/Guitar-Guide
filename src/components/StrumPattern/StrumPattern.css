@@ -47,6 +47,23 @@
 .strum-arrow--U .strum-arrow__icon { color: var(--success); }
 .strum-arrow--x .strum-arrow__icon { color: var(--text-secondary); opacity: 0.5; }
 
+/* Ghost strum: hand moves but doesn't hit strings */
+.strum-arrow--ghost {
+  opacity: 0.35;
+  border: 2px dashed var(--text-secondary);
+  background: transparent;
+}
+
+.strum-arrow--ghost .strum-arrow__icon,
+.strum-arrow--ghost .strum-arrow__label {
+  color: var(--text-secondary);
+}
+
+.strum-arrow--ghost.strum-arrow--active {
+  opacity: 0.6;
+  border-color: var(--accent);
+}
+
 .strum-arrow--active .strum-arrow__icon {
   color: white !important;
 }
@@ -107,4 +124,18 @@
 
 .strum-pattern__btn--playing {
   background: var(--danger);
+}
+
+.strum-pattern__ghost-legend {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px 0;
+}
+
+.strum-pattern__ghost-icon {
+  opacity: 0.5;
+  font-size: 0.9rem;
 }

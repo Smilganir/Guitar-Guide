@@ -1,5 +1,6 @@
-// D = down strum, U = up strum, x = mute/skip
-// Each beat is one unit; "and" counts are half-beats
+// D = down strum, U = up strum, x = mute/skip/rest
+// isGhost = true: hand moves but doesn't hit strings (visual only, no sound)
+// Each pattern can have beatsPerMeasure (default 4 for 4/4)
 
 export const strumPatterns = [
   {
@@ -10,6 +11,7 @@ export const strumPatterns = [
     difficultyHe: 'מתחילים',
     defaultBpm: 60,
     timeSignature: '4/4',
+    beatsPerMeasure: 4,
     pattern: [
       { type: 'D', beat: 1 },
       { type: 'D', beat: 2 },
@@ -27,6 +29,7 @@ export const strumPatterns = [
     difficultyHe: 'מתחילים',
     defaultBpm: 70,
     timeSignature: '4/4',
+    beatsPerMeasure: 4,
     pattern: [
       { type: 'D', beat: 1 },
       { type: 'U', beat: 1.5 },
@@ -48,6 +51,7 @@ export const strumPatterns = [
     difficultyHe: 'בינוני',
     defaultBpm: 80,
     timeSignature: '4/4',
+    beatsPerMeasure: 4,
     pattern: [
       { type: 'D', beat: 1 },
       { type: 'D', beat: 2 },
@@ -67,16 +71,17 @@ export const strumPatterns = [
     difficultyHe: 'בינוני',
     defaultBpm: 90,
     timeSignature: '4/4',
+    beatsPerMeasure: 4,
     pattern: [
       { type: 'D', beat: 1 },
-      { type: 'U', beat: 1.5 },
-      { type: 'x', beat: 2 },
+      { type: 'D', beat: 2, isGhost: true },
       { type: 'U', beat: 2.5 },
-      { type: 'D', beat: 3 },
       { type: 'U', beat: 3.5 },
+      { type: 'D', beat: 4 },
+      { type: 'U', beat: 4.5 },
     ],
-    description: 'דפוס רגוע עם הרגשה קצבית שנותנת תחושה של חוף ים.',
-    tip: 'בפעימה 2 היד יורדת למטה אבל לא נוגעת במיתרים (Mute).',
+    description: 'דפוס רגוע עם הרגשה קצבית שנותנת תחושה של חוף ים. (Calypso)',
+    tip: 'בפעימה 2 היד יורדת למטה אבל לא נוגעת במיתרים — חץ מקווקו = פריטת רוח (Ghost Strum).',
   },
   {
     id: 'ballad',
@@ -86,6 +91,7 @@ export const strumPatterns = [
     difficultyHe: 'מתחילים',
     defaultBpm: 65,
     timeSignature: '4/4',
+    beatsPerMeasure: 4,
     pattern: [
       { type: 'D', beat: 1 },
       { type: 'D', beat: 3 },
@@ -104,6 +110,7 @@ export const strumPatterns = [
     difficultyHe: 'מתקדם',
     defaultBpm: 70,
     timeSignature: '4/4',
+    beatsPerMeasure: 4,
     pattern: [
       { type: 'D', beat: 1, note: 'בס' },
       { type: 'U', beat: 2, note: 'מיתרים 1-3' },
@@ -114,6 +121,90 @@ export const strumPatterns = [
     ],
     description: 'שילוב של בס ופריטה — בפעימות 1 ו-3 פורטים את מיתר הבס, בשאר פורטים את המיתרים הדקים.',
     tip: 'אגודל על מיתרי הבס (4-6), אצבעות על מיתרים דקים (1-3).',
+  },
+  // --- New patterns ---
+  {
+    id: 'waltz',
+    name: 'ואלס',
+    nameEn: 'Waltz',
+    difficulty: 'beginner',
+    difficultyHe: 'מתחילים',
+    defaultBpm: 120,
+    timeSignature: '3/4',
+    beatsPerMeasure: 3,
+    pattern: [
+      { type: 'D', beat: 1 },
+      { type: 'D', beat: 2 },
+      { type: 'U', beat: 3 },
+    ],
+    description: 'דפוס קלאסי לשירים במשקל של שלוש פעימות.',
+    tip: 'מונה 1-2-3. שני למטה, אחד למעלה.',
+  },
+  {
+    id: 'driving-pop',
+    name: 'פופ-רוק מהיר',
+    nameEn: 'Driving Pop/Rock',
+    difficulty: 'intermediate',
+    difficultyHe: 'בינוני',
+    defaultBpm: 110,
+    timeSignature: '4/4',
+    beatsPerMeasure: 4,
+    pattern: [
+      { type: 'D', beat: 1 },
+      { type: 'U', beat: 1.5 },
+      { type: 'D', beat: 2 },
+      { type: 'U', beat: 2.5 },
+      { type: 'D', beat: 3 },
+      { type: 'U', beat: 3.5 },
+      { type: 'D', beat: 4 },
+      { type: 'U', beat: 4.5 },
+    ],
+    description: 'פריטה רציפה ואנרגטית שמתאימה לשירי רוק ופופ מהירים.',
+    tip: 'שמרו על תנועה שווה — כל למטה ולמעלה בקצב.',
+  },
+  {
+    id: 'reggae',
+    name: 'רגאיי',
+    nameEn: 'Reggae Offbeat',
+    difficulty: 'intermediate',
+    difficultyHe: 'בינוני',
+    defaultBpm: 75,
+    timeSignature: '4/4',
+    beatsPerMeasure: 4,
+    pattern: [
+      { type: 'x', beat: 1 },
+      { type: 'U', beat: 1.5 },
+      { type: 'x', beat: 2 },
+      { type: 'U', beat: 2.5 },
+      { type: 'x', beat: 3 },
+      { type: 'U', beat: 3.5 },
+      { type: 'x', beat: 4 },
+      { type: 'U', beat: 4.5 },
+    ],
+    description: 'דפוס שבו מנגנים רק על ה\'אופ-ביט\' (הלמעלה), יוצר תחושה של קפיציות.',
+    tip: 'הדגש על הפעימות ה\'ואן\' — היד ממשיכה לנוע גם ברגעים שלא פורטים.',
+  },
+  {
+    id: 'shuffle',
+    name: 'שאפל / בלוז',
+    nameEn: 'Shuffle/Swing',
+    difficulty: 'advanced',
+    difficultyHe: 'מתקדם',
+    defaultBpm: 85,
+    timeSignature: '4/4',
+    beatsPerMeasure: 4,
+    pattern: [
+      { type: 'D', beat: 1 },
+      { type: 'U', beat: 1.33 },
+      { type: 'D', beat: 2 },
+      { type: 'U', beat: 2.33 },
+      { type: 'D', beat: 3 },
+      { type: 'U', beat: 3.33 },
+      { type: 'D', beat: 4 },
+      { type: 'U', beat: 4.33 },
+    ],
+    description: 'קצב דוהרת סוסים האופייני לבלוז ולקאנטרי. תחושה של ארוך-קצר.',
+    tip: 'הפעימה הראשונה בכל זוג ארוכה, השנייה קצרה — תרגלו עם מטרונום shuffle.',
   },
 ];
 

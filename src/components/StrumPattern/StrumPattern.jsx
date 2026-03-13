@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import './StrumPattern.css';
 
-export default function StrumPattern({ pattern, defaultBpm = 80 }) {
+export default function StrumPattern({ pattern, defaultBpm = 80, beatsPerMeasure = 4 }) {
   const [bpm, setBpm] = useState(defaultBpm);
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const timeoutsRef = useRef([]);
   const intervalRef = useRef(null);
-  const indexRef = useRef(0);
   const audioCtxRef = useRef(null);
+
+  const hasGhost = pattern.some((p) => p.isGhost);
 
   const getAudioContext = useCallback(() => {
     if (!audioCtxRef.current) {
@@ -21,7 +23,6 @@ export default function StrumPattern({ pattern, defaultBpm = 80 }) {
     const now = ctx.currentTime;
 
     if (type === 'D') {
-      // Down strum: lower pitch, fuller sound with two layered oscillators
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -39,8 +40,7 @@ export default function StrumPattern({ pattern, defaultBpm = 80 }) {
       osc2.start(now);
       osc1.stop(now + 0.12);
       osc2.stop(now + 0.12);
-    } else {
-      // Up strum: higher pitch, brighter and shorter
+    } else if (type === 'U') {
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -62,30 +62,51 @@ export default function StrumPattern({ pattern, defaultBpm = 80 }) {
   }, [getAudioContext]);
 
   const start = useCallback(() => {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
     if (intervalRef.current) clearInterval(intervalRef.current);
-    indexRef.current = 0;
-    setActiveIndex(0);
-    setIsPlaying(true);
-    playStrum(pattern[0].type);
 
-    const halfBeatMs = (60 / bpm) * 1000 / 2;
+    const ctx = getAudioContext();
+    if (ctx.state === 'suspended') ctx.resume();
+
+    const beatMs = (60 / bpm) * 1000;
+    const measureMs = beatMs * beatsPerMeasure;
+    const baseBeat = pattern[0]?.beat ?? 1;
+
+    const scheduleMeasure = (measureStartMs) => {
+      pattern.forEach((item, i) => {
+        const delayMs = (item.beat - baseBeat) * beatMs + measureStartMs;
+        const t = setTimeout(() => {
+          setActiveIndex(i);
+          if (!item.isGhost && item.type !== 'x') playStrum(item.type);
+        }, delayMs);
+        timeoutsRef.current.push(t);
+      });
+    };
+
+    scheduleMeasure(0);
+    let measureStart = measureMs;
     intervalRef.current = setInterval(() => {
-      indexRef.current = (indexRef.current + 1) % pattern.length;
-      setActiveIndex(indexRef.current);
-      const strumType = pattern[indexRef.current].type;
-      if (strumType !== 'x') playStrum(strumType);
-    }, halfBeatMs);
-  }, [bpm, pattern, playStrum]);
+      scheduleMeasure(measureStart);
+      measureStart += measureMs;
+    }, measureMs);
+    setIsPlaying(true);
+  }, [bpm, pattern, beatsPerMeasure, playStrum, getAudioContext]);
 
   const stop = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = null;
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
     setIsPlaying(false);
     setActiveIndex(-1);
   }, []);
 
   useEffect(() => {
     return () => {
+      timeoutsRef.current.forEach(clearTimeout);
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (audioCtxRef.current) audioCtxRef.current.close();
     };
@@ -98,19 +119,37 @@ export default function StrumPattern({ pattern, defaultBpm = 80 }) {
     }
   }, [bpm]);
 
+  const getArrowLabel = (item) => {
+    if (item.type === 'D') return 'למטה';
+    if (item.type === 'U') return 'למעלה';
+    return 'דלג';
+  };
+
+  const getArrowIcon = (item) => {
+    if (item.type === 'D') return '↓';
+    if (item.type === 'U') return '↑';
+    return '•';
+  };
+
   return (
     <div className="strum-pattern">
+      {hasGhost && (
+        <p className="strum-pattern__ghost-legend">
+          <span className="strum-pattern__ghost-icon" aria-hidden>◇</span>
+          חץ מקווקו = פריטת רוח (Ghost Strum) — תנועת יד בלי לגעת במיתרים
+        </p>
+      )}
       <div className="strum-pattern__arrows">
         {pattern.map((item, i) => (
           <div
             key={i}
-            className={`strum-arrow ${activeIndex === i ? 'strum-arrow--active' : ''} strum-arrow--${item.type}`}
+            className={`strum-arrow ${activeIndex === i ? 'strum-arrow--active' : ''} strum-arrow--${item.type} ${item.isGhost ? 'strum-arrow--ghost' : ''}`}
           >
             <span className="strum-arrow__icon">
-              {item.type === 'D' ? '↓' : item.type === 'U' ? '↑' : '•'}
+              {getArrowIcon(item)}
             </span>
             <span className="strum-arrow__label">
-              {item.type === 'D' ? 'למטה' : item.type === 'U' ? 'למעלה' : 'דלג'}
+              {item.isGhost ? 'רוח' : getArrowLabel(item)}
             </span>
           </div>
         ))}

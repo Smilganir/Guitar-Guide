@@ -86,6 +86,54 @@ export const chords = [
     baseFret: 1,
     notes: ['G', 'B', 'D', 'G', 'B', 'G'],
   },
+  {
+    id: 'Bb',
+    name: 'Bb',
+    nameHe: 'סי במול מז\'ור',
+    type: 'major',
+    typeHe: 'מז\'ור',
+    frets: [-1, 1, 3, 3, 3, 1],
+    fingers: [0, 1, 2, 3, 4, 1],
+    baseFret: 1,
+    barres: [{ fret: 1, fromString: 5, toString: 1 }],
+    notes: ['Bb', 'F', 'Bb', 'D', 'F'],
+  },
+  {
+    id: 'F#',
+    name: 'F#',
+    nameHe: 'פה דיאז מז\'ור',
+    type: 'major',
+    typeHe: 'מז\'ור',
+    frets: [2, 4, 4, 3, 2, 2],
+    fingers: [1, 2, 3, 4, 1, 1],
+    baseFret: 1,
+    barres: [{ fret: 2, fromString: 6, toString: 1 }],
+    notes: ['F#', 'C#', 'F#', 'A#', 'C#', 'F#'],
+  },
+  {
+    id: 'Ab',
+    name: 'Ab',
+    nameHe: 'לה במול מז\'ור',
+    type: 'major',
+    typeHe: 'מז\'ור',
+    frets: [4, 6, 6, 5, 4, 4],
+    fingers: [1, 2, 3, 4, 1, 1],
+    baseFret: 4,
+    barres: [{ fret: 4, fromString: 6, toString: 1 }],
+    notes: ['Ab', 'Eb', 'Ab', 'C', 'Eb', 'Ab'],
+  },
+  {
+    id: 'Eb',
+    name: 'Eb',
+    nameHe: 'מי במול מז\'ור',
+    type: 'major',
+    typeHe: 'מז\'ור',
+    frets: [3, 5, 5, 4, 3, 3],
+    fingers: [1, 2, 3, 4, 1, 1],
+    baseFret: 1,
+    barres: [{ fret: 3, fromString: 6, toString: 1 }],
+    notes: ['Eb', 'Bb', 'Eb', 'G', 'Bb', 'Eb'],
+  },
 
   // === Minor Chords ===
   {
@@ -167,6 +215,18 @@ export const chords = [
     fingers: [2, 1, 0, 0, 3, 4],
     baseFret: 1,
     notes: ['G', 'Bb', 'D', 'G', 'Bb', 'G'],
+  },
+  {
+    id: 'F#m',
+    name: 'F#m',
+    nameHe: 'פה דיאז מינור',
+    type: 'minor',
+    typeHe: 'מינור',
+    frets: [2, 4, 4, 2, 2, 2],
+    fingers: [1, 3, 4, 1, 1, 1],
+    baseFret: 1,
+    barres: [{ fret: 2, fromString: 5, toString: 1 }],
+    notes: ['F#', 'C#', 'F#', 'A', 'C#', 'F#'],
   },
 
   // === 7th Chords ===
@@ -293,6 +353,33 @@ export const chords = [
     baseFret: 1,
     notes: ['E', 'B', 'E', 'A', 'B', 'E'],
   },
+
+  // === Maj7 Chords ===
+  {
+    id: 'Fmaj7',
+    name: 'Fmaj7',
+    nameHe: 'פה מז\'ור 7',
+    type: 'maj7',
+    typeHe: 'מז\'ור 7',
+    frets: [1, 3, 3, 2, 1, 0],
+    fingers: [1, 3, 4, 2, 1, 0],
+    baseFret: 1,
+    barres: [{ fret: 1, fromString: 5, toString: 2 }],
+    notes: ['F', 'A', 'C', 'E', 'C', 'F'],
+  },
+
+  // === Add9 Chords ===
+  {
+    id: 'Cadd9',
+    name: 'Cadd9',
+    nameHe: 'דו אד 9',
+    type: 'add9',
+    typeHe: 'אד 9',
+    frets: [-1, 3, 2, 0, 3, 0],
+    fingers: [0, 2, 1, 0, 3, 0],
+    baseFret: 1,
+    notes: ['C', 'E', 'G', 'D', 'E'],
+  },
 ];
 
 export const chordTypes = [
@@ -300,5 +387,8 @@ export const chordTypes = [
   { id: 'major', label: 'מז\'ור (Major)' },
   { id: 'minor', label: 'מינור (Minor)' },
   { id: '7', label: 'שביעית (7th)' },
+  { id: 'maj7', label: 'מז\'ור 7 (Maj7)' },
+  { id: 'add9', label: 'אד 9 (Add9)' },
   { id: 'sus', label: 'סאס (Sus)' },
+  { id: 'barre', label: 'בררה (Barre)' },
 ];

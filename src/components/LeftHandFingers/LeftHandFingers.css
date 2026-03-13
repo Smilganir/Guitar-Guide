@@ -1,0 +1,85 @@
+.finger-legend {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.finger-legend__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  width: 100%;
+  white-space: nowrap;
+}
+
+.finger-legend__toggle:hover {
+  background: var(--accent-light);
+}
+
+.finger-legend__chevron {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.finger-legend__chevron--open {
+  transform: rotate(180deg);
+}
+
+.finger-legend__body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 14px 12px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.finger-legend__svg {
+  flex-shrink: 0;
+}
+
+.finger-legend__keys {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.finger-legend__key {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.finger-legend__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+
+.finger-legend__key-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}

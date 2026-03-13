@@ -1,31 +1,53 @@
 import './ChordDiagram.css';
+import { FINGER_COLORS } from '../../constants/fingerColors';
 
 const STRING_COUNT = 6;
 const FRET_COUNT = 5;
 const SVG_WIDTH = 120;
-const SVG_HEIGHT = 160;
 const PADDING_TOP = 36;
 const PADDING_SIDE = 20;
 const FRETBOARD_WIDTH = SVG_WIDTH - PADDING_SIDE * 2;
-const FRETBOARD_HEIGHT = SVG_HEIGHT - PADDING_TOP - 16;
+const NOTES_EXTRA = 30; // extra height when showNotes=true
+const SVG_HEIGHT_BASE = 160;
+const FRETBOARD_HEIGHT = SVG_HEIGHT_BASE - PADDING_TOP - 16;
 const STRING_SPACING = FRETBOARD_WIDTH / (STRING_COUNT - 1);
 const FRET_SPACING = FRETBOARD_HEIGHT / FRET_COUNT;
 const DOT_RADIUS = 7;
 
-export default function ChordDiagram({ chord, size = 1 }) {
+// Compute note name at given string (0=low E) and fret number
+const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const OPEN_INDICES = [4, 9, 2, 7, 11, 4]; // E, A, D, G, B, E
+
+function getNoteAtFret(stringIndex, fret) {
+  if (fret < 0) return null;
+  return CHROMATIC[(OPEN_INDICES[stringIndex] + fret) % 12];
+}
+
+export default function ChordDiagram({ chord, size = 1, coloredFingers = true, showNotes = false }) {
   const { name, frets, fingers, baseFret = 1, barres } = chord;
+
+  const svgHeight = showNotes ? SVG_HEIGHT_BASE + NOTES_EXTRA : SVG_HEIGHT_BASE;
+
+  const getDotFill = (fingerNum) =>
+    coloredFingers && fingerNum >= 1 && fingerNum <= 4
+      ? FINGER_COLORS[fingerNum]
+      : 'var(--dot-color)';
 
   const getX = (stringIndex) => PADDING_SIDE + stringIndex * STRING_SPACING;
   const getY = (fretIndex) => PADDING_TOP + fretIndex * FRET_SPACING;
 
+  const bottomY = getY(FRET_COUNT); // y of the last fret line
+  const notesY = bottomY + 13;      // y position for note text labels
+
   return (
-    <div className="chord-diagram" style={{ transform: `scale(${size})` }}>
+    <div className="chord-diagram">
       <svg
-        width={SVG_WIDTH}
-        height={SVG_HEIGHT}
-        viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
+        width={SVG_WIDTH * size}
+        height={svgHeight * size}
+        viewBox={`0 0 ${SVG_WIDTH} ${svgHeight}`}
         xmlns="http://www.w3.org/2000/svg"
       >
+        {/* Chord name */}
         <text
           x={SVG_WIDTH / 2}
           y={14}
@@ -37,6 +59,7 @@ export default function ChordDiagram({ chord, size = 1 }) {
           {name}
         </text>
 
+        {/* Nut bar or fret number */}
         {baseFret === 1 ? (
           <line
             x1={PADDING_SIDE}
@@ -80,7 +103,7 @@ export default function ChordDiagram({ chord, size = 1 }) {
             x1={getX(i)}
             y1={PADDING_TOP}
             x2={getX(i)}
-            y2={getY(FRET_COUNT)}
+            y2={bottomY}
             stroke="var(--string-color)"
             strokeWidth={1 + i * 0.2}
           />
@@ -100,7 +123,7 @@ export default function ChordDiagram({ chord, size = 1 }) {
               width={Math.abs(toX - fromX) + DOT_RADIUS * 2}
               height={DOT_RADIUS * 2}
               rx={DOT_RADIUS}
-              fill="var(--dot-color)"
+              fill={getDotFill(1)}
             />
           );
         })}
@@ -143,15 +166,12 @@ export default function ChordDiagram({ chord, size = 1 }) {
           );
           if (hasBarre) return null;
 
+          const fingerNum = fingers[i];
+          const dotFill = getDotFill(fingerNum);
           return (
             <g key={`f-${i}`}>
-              <circle
-                cx={x}
-                cy={y}
-                r={DOT_RADIUS}
-                fill="var(--dot-color)"
-              />
-              {fingers[i] > 0 && (
+              <circle cx={x} cy={y} r={DOT_RADIUS} fill={dotFill} />
+              {fingerNum > 0 && (
                 <text
                   x={x}
                   y={y + 4}
@@ -160,12 +180,57 @@ export default function ChordDiagram({ chord, size = 1 }) {
                   fill="white"
                   fontWeight="600"
                 >
-                  {fingers[i]}
+                  {fingerNum}
                 </text>
               )}
             </g>
           );
         })}
+
+        {/* Note names below strings (shown only in modal) */}
+        {showNotes && (
+          <g className="chord-diagram__notes-row">
+            {/* Separator line spanning full fretboard */}
+            <line
+              x1={PADDING_SIDE}
+              y1={bottomY + 4}
+              x2={SVG_WIDTH - PADDING_SIDE}
+              y2={bottomY + 4}
+              stroke="var(--fret-color)"
+              strokeWidth="0.8"
+              strokeDasharray="2,2"
+            />
+            {frets.map((fret, i) => {
+              const note = fret === -1 ? '×' : getNoteAtFret(i, fret);
+              const x = getX(i);
+              return (
+                <text
+                  key={`note-${i}`}
+                  x={x}
+                  y={notesY}
+                  textAnchor="middle"
+                  fontSize="8"
+                  fontWeight={fret === -1 ? '400' : '700'}
+                  fill={fret === -1 ? 'var(--muted-color)' : 'var(--accent-dark)'}
+                  fontFamily="monospace"
+                >
+                  {note}
+                </text>
+              );
+            })}
+            {/* "תווים" label centered below the notes row */}
+            <text
+              x={SVG_WIDTH / 2}
+              y={notesY + 11}
+              textAnchor="middle"
+              fontSize="7"
+              fontWeight="600"
+              fill="var(--text-secondary)"
+            >
+              תווים
+            </text>
+          </g>
+        )}
       </svg>
     </div>
   );
