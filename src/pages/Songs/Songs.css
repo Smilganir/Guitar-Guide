@@ -1,0 +1,310 @@
+.page-songs {
+  padding-bottom: 48px;
+}
+
+.songs__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.songs__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 16px;
+  text-align: right;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.songs__card:hover {
+  border-color: var(--accent);
+}
+
+.songs__card--selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.songs__card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.songs__card-artist {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.songs__card-progression {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 4px;
+  direction: ltr;
+}
+
+.songs__card-meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.songs__card-pattern {
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+/* Player */
+.songs__player {
+  position: relative;
+  padding: 28px 24px;
+}
+
+.songs__player-header {
+  margin-bottom: 20px;
+}
+
+.songs__player-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-dark);
+  margin-bottom: 2px;
+}
+
+.songs__player-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.songs__player-progression-wrap {
+  margin-bottom: 16px;
+  direction: ltr;
+}
+
+.songs__player-progression-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.songs__player-progression {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px 4px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  direction: ltr;
+}
+
+.songs__player-chord-name {
+  padding: 4px 12px;
+  border-radius: 10px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.songs__player-chord-name--active {
+  background: var(--accent);
+  color: white;
+}
+
+.songs__player-diagrams {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px 0;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  direction: ltr;
+}
+
+.songs__player-diagram-wrap {
+  padding: 8px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.songs__player-diagram-wrap--active {
+  border-color: var(--accent);
+  background: var(--card-bg);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.songs__player-strum {
+  margin-bottom: 20px;
+}
+
+.songs__player-strum-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.songs__player-strum-arrows {
+  display: flex;
+  gap: 6px;
+  direction: ltr;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.songs__player-strum-arrows .strum-arrow {
+  min-width: 40px;
+  padding: 6px 8px;
+}
+
+.songs__player-strum-arrows .strum-arrow__icon {
+  font-size: 1.3rem;
+}
+
+.songs__player-countin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 24px 32px;
+  background: var(--accent-light);
+  border-radius: 20px;
+  border: 3px solid var(--accent);
+  z-index: 10;
+}
+
+.songs__player-countin-num {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.songs__player-countin-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.songs__player-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.songs__player-progression-arrow {
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin: 0 2px;
+  user-select: none;
+}
+
+.songs__player-bpm {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.songs__player-bpm-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.songs__player-bpm-slider {
+  width: 120px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.songs__player-bpm-slider:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.songs__player-bpm-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 56px;
+}
+
+.songs__player-loop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.songs__player-loop input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.songs__player-loop input:disabled {
+  cursor: not-allowed;
+}
+
+.songs__player-btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 24px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  transition: all 0.2s;
+}
+
+.songs__player-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.songs__player-btn--stop {
+  background: var(--danger);
+}
+
+.songs__player-btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .songs__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .songs__player-progression {
+    font-size: 1.4rem;
+  }
+
+  .songs__player-diagrams {
+    gap: 8px;
+  }
+}

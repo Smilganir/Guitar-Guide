@@ -57,9 +57,9 @@ function playBuffer(ctx, buffer, startTime, gainValue = 0.5) {
 export function useChordSound() {
   const playingRef = useRef(false);
 
-  const playChord = useCallback(async (chord) => {
+  const playChord = useCallback(async (chord, options = {}) => {
     if (!chord?.frets) return;
-    if (playingRef.current) return;
+    if (!options.force && playingRef.current) return;
     playingRef.current = true;
 
     const ctx = getContext();

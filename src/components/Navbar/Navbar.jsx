@@ -6,6 +6,7 @@ const links = [
   { to: '/chords', label: 'אקורדים', icon: '🎸' },
   { to: '/theory', label: 'תיאוריה', icon: '📖' },
   { to: '/strumming', label: 'פריטה', icon: '🎵' },
+  { to: '/songs', label: 'שירים', icon: '🎤' },
   { to: '/practice', label: 'תרגול', icon: '⏱️' },
 ];
 

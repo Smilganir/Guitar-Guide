@@ -201,7 +201,12 @@ export default function ChordDiagram({ chord, size = 1, coloredFingers = true, s
               strokeDasharray="2,2"
             />
             {frets.map((fret, i) => {
-              const note = fret === -1 ? '×' : getNoteAtFret(i, fret);
+              const note =
+                fret === -1
+                  ? '×'
+                  : chord.notes && chord.notes.length === 6
+                    ? chord.notes[i]
+                    : getNoteAtFret(i, fret);
               const x = getX(i);
               return (
                 <text

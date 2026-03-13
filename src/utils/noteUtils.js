@@ -2,6 +2,12 @@
 const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const OPEN_INDICES = [4, 9, 2, 7, 11, 4]; // semitone index for open string (E=4, A=9, ...)
 
+// Normalize flat names to sharp for frequency/filename (CHROMATIC uses sharps)
+const FLAT_TO_SHARP = { Cb: 'B', Db: 'C#', Eb: 'D#', Fb: 'E', Gb: 'F#', Ab: 'G#', Bb: 'A#' };
+function toChromaticName(name) {
+  return FLAT_TO_SHARP[name] ?? name;
+}
+
 export function getNoteAtFret(stringIndex, fret) {
   if (fret < 0) return null;
   const noteIndex = (OPEN_INDICES[stringIndex] + fret) % 12;
@@ -23,23 +29,31 @@ export function noteToFileName(name, octave) {
   return `${safe}${octave}`;
 }
 
-/** Get frequency in Hz for a note name + octave (A4 = 440) */
+/** Get frequency in Hz for a note name + octave (A4 = 440). Accepts sharps or flats. */
 export function noteToFrequency(name, octave) {
-  const index = CHROMATIC.indexOf(name);
+  const nameNorm = toChromaticName(name);
+  const index = CHROMATIC.indexOf(nameNorm);
   if (index === -1) return 440;
   const A4 = 440;
   const semitonesFromA4 = (octave - 4) * 12 + (index - 9); // C=0, so A=9
   return A4 * Math.pow(2, semitonesFromA4 / 12);
 }
 
+// Standard guitar string octaves (low E to high e): E2 A2 D3 G3 B3 E4
+const STRING_OCTAVES = [2, 2, 3, 3, 3, 4];
+
 /** For a chord, return list of { stringIndex, noteName, octave, delayMs } for playback */
 export function chordToNotes(chord) {
-  const openMidi = [40, 45, 50, 55, 59, 64];
   const result = [];
+  const useStoredNotes = chord.notes && chord.notes.length === 6;
+
   for (let i = 0; i < 6; i++) {
     const fret = chord.frets[i];
     if (fret === -1) continue;
-    const { name, octave } = getNoteNameAndOctave(i, fret);
+
+    const name = useStoredNotes ? chord.notes[i] : getNoteNameAndOctave(i, fret).name;
+    const octave = useStoredNotes ? STRING_OCTAVES[i] : getNoteNameAndOctave(i, fret).octave;
+
     result.push({
       stringIndex: i,
       name,

@@ -228,6 +228,18 @@ export const chords = [
     barres: [{ fret: 2, fromString: 5, toString: 1 }],
     notes: ['F#', 'C#', 'F#', 'A', 'C#', 'F#'],
   },
+  {
+    id: 'C#m',
+    name: 'C#m',
+    nameHe: 'דו דיאז מינור',
+    type: 'minor',
+    typeHe: 'מינור',
+    frets: [-1, 4, 6, 6, 5, 4],
+    fingers: [0, 1, 3, 4, 2, 1],
+    baseFret: 4,
+    barres: [{ fret: 4, fromString: 5, toString: 1 }],
+    notes: ['C#', 'G#', 'C#', 'E', 'G#', 'C#'],
+  },
 
   // === 7th Chords ===
   {
