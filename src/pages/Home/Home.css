@@ -29,11 +29,59 @@
 
 .home__name-form {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 10px;
   margin: 10px 0 6px;
+}
+
+.home__gender-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.home__gender-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.home__gender-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.home__gender-btn {
+  padding: 6px 14px;
+  border: 2px solid var(--bg-secondary);
+  border-radius: 18px;
+  background: transparent;
+  font-family: var(--font-family);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.home__gender-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.home__gender-btn--on {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.home__name-form-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .home__name-input {

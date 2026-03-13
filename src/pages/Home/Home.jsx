@@ -17,7 +17,9 @@ export default function Home() {
   const practiced = JSON.parse(localStorage.getItem('practiced') || '[]');
 
   const [userName, setUserName] = useLocalStorage('user-name', '');
+  const [userGender, setUserGender] = useLocalStorage('user-gender', ''); // 'm' | 'f'
   const [nameInput, setNameInput] = useState('');
+  const [genderInput, setGenderInput] = useState('');
   const [editingName, setEditingName] = useState(false);
 
   const [favorites] = useLocalStorage('favorites', []);
@@ -48,10 +50,14 @@ export default function Home() {
     const trimmed = nameInput.trim();
     if (trimmed) {
       setUserName(trimmed);
+      if (genderInput) setUserGender(genderInput);
     }
     setEditingName(false);
     setNameInput('');
+    setGenderInput('');
   };
+
+  const readyText = userGender === 'm' ? 'מוכן' : 'מוכנה';
 
   return (
     <div className="page fade-in">
@@ -60,12 +66,12 @@ export default function Home() {
         {userName ? (
           <>
             <h1 className="home__title">
-              שלום {userName}, מוכנה לנגן? 🎸
+              שלום {userName}, {readyText} לנגן? 🎸
             </h1>
             <button
               type="button"
               className="home__name-edit-btn"
-              onClick={() => { setEditingName(true); setNameInput(userName); }}
+              onClick={() => { setEditingName(true); setNameInput(userName); setGenderInput(userGender); }}
             >
               שנה שם
             </button>
@@ -86,14 +92,35 @@ export default function Home() {
               maxLength={30}
               autoFocus={editingName}
             />
-            <button type="button" className="home__name-save" onClick={handleNameSave}>
-              {editingName ? 'עדכון' : 'שמור'}
-            </button>
-            {editingName && (
-              <button type="button" className="home__name-cancel" onClick={() => setEditingName(false)}>
-                ביטול
+            <div className="home__gender-row">
+              <span className="home__gender-label">איך לפנות אליך?</span>
+              <div className="home__gender-btns">
+                <button
+                  type="button"
+                  className={`home__gender-btn ${genderInput === 'm' ? 'home__gender-btn--on' : ''}`}
+                  onClick={() => setGenderInput('m')}
+                >
+                  מצטרף
+                </button>
+                <button
+                  type="button"
+                  className={`home__gender-btn ${genderInput === 'f' ? 'home__gender-btn--on' : ''}`}
+                  onClick={() => setGenderInput('f')}
+                >
+                  מצטרפת
+                </button>
+              </div>
+            </div>
+            <div className="home__name-form-actions">
+              <button type="button" className="home__name-save" onClick={handleNameSave}>
+                {editingName ? 'עדכון' : 'שמור'}
               </button>
-            )}
+              {editingName && (
+                <button type="button" className="home__name-cancel" onClick={() => { setEditingName(false); setGenderInput(''); }}>
+                  ביטול
+                </button>
+              )}
+            </div>
           </div>
         )}
 
@@ -133,7 +160,7 @@ export default function Home() {
           <h3 className="home__favorites-title">❤️ המועדפים שלי</h3>
           <div className="home__favorites-list">
             {favSongs.map((song) => (
-              <Link key={song.id} to="/songs" className="home__favorites-item card">
+              <Link key={song.id} to={`/songs?song=${song.id}`} className="home__favorites-item card">
                 <span className="home__favorites-item-title">{song.titleHe}</span>
                 <span className="home__favorites-item-artist">{song.artist}</span>
               </Link>
