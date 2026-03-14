@@ -1,15 +1,24 @@
 import { NavLink } from 'react-router-dom';
 import { useLocale } from '../../contexts/LocaleContext';
+import {
+  HomeIcon,
+  TunerIcon,
+  TheoryIcon,
+  ChordsIcon,
+  StrummingIcon,
+  SongsIcon,
+  PracticeIcon,
+} from '../Icons/Icons';
 import './Navbar.css';
 
 const linkKeys = [
-  { to: '/', key: 'home', icon: '🏠' },
-  { to: '/tuner', key: 'tuner', icon: '🎯' },
-  { to: '/theory', key: 'theory', icon: '📖' },
-  { to: '/chords', key: 'chords', icon: '🎸' },
-  { to: '/strumming', key: 'strumming', icon: '🎵' },
-  { to: '/songs', key: 'songs', icon: '🎤' },
-  { to: '/practice', key: 'practice', icon: '⏱️' },
+  { to: '/', key: 'home', Icon: HomeIcon },
+  { to: '/tuner', key: 'tuner', Icon: TunerIcon },
+  { to: '/theory', key: 'theory', Icon: TheoryIcon },
+  { to: '/chords', key: 'chords', Icon: ChordsIcon },
+  { to: '/strumming', key: 'strumming', Icon: StrummingIcon },
+  { to: '/songs', key: 'songs', Icon: SongsIcon },
+  { to: '/practice', key: 'practice', Icon: PracticeIcon },
 ];
 
 export default function Navbar() {
@@ -41,7 +50,7 @@ export default function Navbar() {
             }
             end={link.to === '/'}
           >
-            <span className="navbar__link-icon">{link.icon}</span>
+            <span className="navbar__link-icon"><link.Icon /></span>
             <span className="navbar__link-label">{t(`nav.${link.key}`)}</span>
           </NavLink>
         ))}

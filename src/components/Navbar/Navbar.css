@@ -1,8 +1,8 @@
 .navbar {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 12px 24px;
+  gap: 8px;
+  padding: 8px 16px;
   background: var(--card-bg);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   position: sticky;
@@ -67,7 +67,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 6px 10px;
   border-radius: 12px;
   text-decoration: none;
   color: var(--text-secondary);
@@ -88,13 +88,22 @@
 }
 
 .navbar__link-icon {
-  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__link-icon .navbar__link-icon-svg,
+.navbar__link-icon svg {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
   .navbar {
-    gap: 8px;
-    padding: 10px 16px;
+    gap: 6px;
+    padding: 6px 12px;
   }
 
   .navbar__links {
@@ -109,7 +118,9 @@
     font-size: 0.7rem;
   }
 
-  .navbar__link-icon {
-    font-size: 1rem;
+  .navbar__link-icon .navbar__link-icon-svg,
+  .navbar__link-icon svg {
+    width: 28px;
+    height: 28px;
   }
 }

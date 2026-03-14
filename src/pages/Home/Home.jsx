@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import { chords } from '../../data/chords';
 import { songs } from '../../data/songs';
 import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
+import {
+  TunerIcon,
+  TheoryIcon,
+  ChordsIcon,
+  StrummingIcon,
+  SongsIcon,
+  PracticeIcon,
+} from '../../components/Icons/Icons';
 import { useLocale } from '../../contexts/LocaleContext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useDailyGoal } from '../../hooks/useDailyGoal';
@@ -40,12 +48,12 @@ export default function Home() {
   const goalRemaining = Math.max(0, Math.ceil((goalSeconds - seconds) / 60));
 
   const sections = [
-    { to: '/tuner', icon: '🎯', titleKey: 'tuner', descKey: 'tunerDesc' },
-    { to: '/theory', icon: '📖', titleKey: 'theory', descKey: 'theoryDesc' },
-    { to: '/chords', icon: '🎸', titleKey: 'chords', descKey: 'chordsDesc' },
-    { to: '/strumming', icon: '🎵', titleKey: 'strumming', descKey: 'strummingDesc' },
-    { to: '/songs', icon: '🎤', titleKey: 'songs', descKey: 'songsDesc' },
-    { to: '/practice', icon: '⏱️', titleKey: 'practice', descKey: 'practiceDesc' },
+    { to: '/tuner', Icon: TunerIcon, titleKey: 'tuner', descKey: 'tunerDesc' },
+    { to: '/theory', Icon: TheoryIcon, titleKey: 'theory', descKey: 'theoryDesc' },
+    { to: '/chords', Icon: ChordsIcon, titleKey: 'chords', descKey: 'chordsDesc' },
+    { to: '/strumming', Icon: StrummingIcon, titleKey: 'strumming', descKey: 'strummingDesc' },
+    { to: '/songs', Icon: SongsIcon, titleKey: 'songs', descKey: 'songsDesc' },
+    { to: '/practice', Icon: PracticeIcon, titleKey: 'practice', descKey: 'practiceDesc' },
   ];
 
   const handleNameSave = () => {
@@ -198,7 +206,7 @@ export default function Home() {
       <div className="home__sections">
         {sections.map((section) => (
           <Link key={section.to} to={section.to} className="home__section card">
-            <span className="home__section-icon">{section.icon}</span>
+            <span className="home__section-icon"><section.Icon /></span>
             <h3>{t(`nav.${section.titleKey}`)}</h3>
             <p>{t(`home.${section.descKey}`)}</p>
           </Link>
