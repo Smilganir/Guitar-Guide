@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Feather } from 'lucide-react';
 import { songs } from '../../data/songs';
 import { strumPatterns } from '../../data/strumPatterns';
 import ChordDiagram from '../../components/ChordDiagram/ChordDiagram';
@@ -151,7 +152,9 @@ export default function Songs() {
                 </span>
                 <span className="songs__sidebar-item-actions">
                   {song.easyProgression && (
-                    <span className="songs__sidebar-item-easy">⭐</span>
+                    <span className="songs__sidebar-item-easy" title={t('songs.easy')}>
+                      <Feather className="songs__sidebar-item-easy-icon" size={18} />
+                    </span>
                   )}
                   <span
                     className={`songs__sidebar-item-fav ${isFav ? 'songs__sidebar-item-fav--on' : ''}`}
@@ -212,7 +215,7 @@ export default function Songs() {
                       setEasyMode(!easyMode);
                     }}
                   >
-                    {easyMode ? `🎓 ${t('songs.original')}` : `⭐ ${t('songs.easy')}`}
+                    {easyMode ? `🎓 ${t('songs.original')}` : (<><Feather className="songs__player-easy-icon" size={18} /> {t('songs.easy')}</>)}
                   </button>
                 )}
               </div>

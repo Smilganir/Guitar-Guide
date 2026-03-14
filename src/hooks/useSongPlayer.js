@@ -135,6 +135,11 @@ export function useSongPlayer(song, playChord) {
     setBpmOffset(0);
   }, [song?.id]);
 
+  // When song changes, stop current playback so the previous song doesn't keep playing
+  useEffect(() => {
+    stop();
+  }, [song?.id, stop]);
+
   const effectiveBpm = song ? Math.max(50, Math.min(200, song.bpm + bpmOffset)) : null;
 
   return {

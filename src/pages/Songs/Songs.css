@@ -203,8 +203,18 @@
 }
 
 .songs__sidebar-item-easy {
-  font-size: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-inline-start: auto;
+}
+
+.songs__sidebar-item-easy-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  flex-shrink: 0;
 }
 
 .songs__sidebar-empty {
@@ -311,6 +321,9 @@
 }
 
 .songs__player-easy-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 5px 14px;
   border: 2px solid var(--success);
   border-radius: 18px;
@@ -322,6 +335,13 @@
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+}
+
+.songs__player-easy-toggle .songs__player-easy-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: currentColor;
 }
 
 .songs__player-easy-toggle:hover {
