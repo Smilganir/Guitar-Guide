@@ -9,6 +9,7 @@ import {
   SongsIcon,
   PracticeIcon,
 } from '../Icons/Icons';
+import guitarIcon from '../../assets/Guitar.svg';
 import './Navbar.css';
 
 const linkKeys = [
@@ -36,7 +37,7 @@ export default function Navbar() {
           {locale === 'he' ? 'EN' : 'עב'}
         </button>
         <div className="navbar__brand">
-          <span className="navbar__logo">🎸</span>
+          <img src={guitarIcon} alt="" className="navbar__brand-icon" />
           <span className="navbar__title">{t('nav.brand')}</span>
         </div>
       </div>

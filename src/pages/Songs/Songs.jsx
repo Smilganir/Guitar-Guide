@@ -10,6 +10,7 @@ import { useSongPlayer } from '../../hooks/useSongPlayer';
 import { useLocale } from '../../contexts/LocaleContext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useDailyGoal } from '../../hooks/useDailyGoal';
+import songsIcon from '../../assets/Songs.svg';
 import './Songs.css';
 
 export default function Songs() {
@@ -180,7 +181,7 @@ export default function Songs() {
       <main className="songs__main">
         {!activeSong ? (
           <div className="songs__empty-state">
-            <span className="songs__empty-state-icon">🎸</span>
+            <img src={songsIcon} alt="" className="songs__empty-state-icon" />
             <h2>{t('songs.selectSong')}</h2>
             <p>{t('songs.selectSongHint')}</p>
           </div>

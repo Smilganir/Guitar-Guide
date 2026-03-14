@@ -1,5 +1,6 @@
 import { useTuner } from '../../hooks/useTuner';
 import { useLocale } from '../../contexts/LocaleContext';
+import guitarIcon from '../../assets/Guitar.svg';
 import './Tuner.css';
 
 function centsToStatus(cents) {
@@ -112,7 +113,7 @@ export default function Tuner() {
               </>
             ) : (
               <div className="tuner__waiting">
-                <span className="tuner__waiting-icon">🎸</span>
+                <img src={guitarIcon} alt="" className="tuner__waiting-icon" />
                 <span>{t('tuner.playString')}</span>
               </div>
             )}
