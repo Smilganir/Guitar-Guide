@@ -92,6 +92,7 @@ function PracticeTimer() {
 }
 
 function ChordDrill() {
+  const { t } = useLocale();
   const [chord1, setChord1] = useState(() => getRandomChord());
   const [chord2, setChord2] = useState(() => getRandomChord(chord1));
   const [practiced, setPracticed] = useState(() => JSON.parse(localStorage.getItem('practiced') || '[]'));
