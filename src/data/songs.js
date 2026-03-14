@@ -146,12 +146,12 @@ export const songs = [
     titleHe: 'כנפיים',
     titleEn: 'Knafayim',
     artist: 'טונה',
-    progression: ['A', 'C#m', 'F#m', 'D'],
+    progression: ['Bb', 'Gm', 'Dm', 'Am'],
     bpm: 88,
-    patternId: 'driving-pop',
+    patternId: 'reggae',
     category: 'israeli',
-    easyProgression: ['G', 'Bm', 'Em', 'C'],
-    easyNote: 'גרסה קלה — קאפו בסריג 2 כדי לנגן עם המקור',
+
+
   },
   {
     id: 'yesh-li-sikuy',
