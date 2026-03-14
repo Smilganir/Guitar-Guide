@@ -96,18 +96,6 @@ export const songs = [
     category: 'israeli',
   },
   {
-    id: 'panthera',
-    titleHe: 'פנתרה',
-    titleEn: 'Panthera',
-    artist: 'נועה קירל',
-    progression: ['Cm', 'Ab', 'Eb', 'Bb'],
-    bpm: 124,
-    patternId: 'driving-pop',
-    category: 'israeli',
-    easyProgression: ['Am', 'F', 'C', 'G'],
-    easyNote: 'גרסה קלה — קאפו בסריג 3 כדי לנגן עם המקור',
-  },
-  {
     id: 'shekiot-adumot',
     titleHe: 'שקיעות אדומות',
     titleEn: 'Shekiot Adumot',

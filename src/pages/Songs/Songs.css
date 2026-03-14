@@ -686,6 +686,12 @@
     border-radius: 10px;
   }
 
+  .songs__sidebar-item-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
   .songs__sidebar-item--active {
     background: var(--accent-light);
     box-shadow: inset 0 -3px 0 var(--accent);
