@@ -37,8 +37,8 @@ export default function Navbar() {
           {locale === 'he' ? 'EN' : 'עב'}
         </button>
         <div className="navbar__brand">
-          <img src={guitarIcon} alt="" className="navbar__brand-icon" />
           <span className="navbar__title">{t('nav.brand')}</span>
+          <img src={guitarIcon} alt="" className="navbar__brand-icon" />
         </div>
       </div>
       <div className="navbar__links">
