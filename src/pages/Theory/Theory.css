@@ -72,6 +72,54 @@
   margin: 0;
 }
 
+.theory__guide-body-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.theory__guide-basics {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.theory__guide-basics-block {
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--fret-color);
+}
+
+.theory__guide-basics-block:last-child {
+  border-bottom: none;
+}
+
+.theory__guide-basics-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin: 0 0 8px;
+}
+
+.theory__guide-basics-block .theory__guide-body {
+  margin: 0;
+}
+
+.theory__guide-tips-list {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+.theory__guide-tips-list li {
+  margin-bottom: 8px;
+}
+
+.theory__guide-tips-list li:last-child {
+  margin-bottom: 0;
+}
+
 /* Info box (capo) */
 .theory__guide-info-box {
   display: flex;

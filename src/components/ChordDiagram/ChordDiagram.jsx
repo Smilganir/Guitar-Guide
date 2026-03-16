@@ -59,7 +59,7 @@ export default function ChordDiagram({ chord, size = 1, coloredFingers = true, s
           {name}
         </text>
 
-        {/* Nut bar or fret number */}
+        {/* Nut bar or starting fret number */}
         {baseFret === 1 ? (
           <line
             x1={PADDING_SIDE}
@@ -75,9 +75,9 @@ export default function ChordDiagram({ chord, size = 1, coloredFingers = true, s
             x={PADDING_SIDE - 14}
             y={PADDING_TOP + FRET_SPACING / 2 + 5}
             textAnchor="middle"
-            fontSize="11"
-            fill="var(--text-secondary)"
-            fontWeight="600"
+            fontSize="12"
+            fill="var(--text-primary)"
+            fontWeight="800"
           >
             {baseFret}
           </text>
@@ -97,17 +97,20 @@ export default function ChordDiagram({ chord, size = 1, coloredFingers = true, s
         ))}
 
         {/* String lines */}
-        {Array.from({ length: STRING_COUNT }).map((_, i) => (
-          <line
-            key={`string-${i}`}
-            x1={getX(i)}
-            y1={PADDING_TOP}
-            x2={getX(i)}
-            y2={bottomY}
-            stroke="var(--string-color)"
-            strokeWidth={1 + i * 0.2}
-          />
-        ))}
+        {Array.from({ length: STRING_COUNT }).map((_, i) => {
+          const thicknessIndex = STRING_COUNT - 1 - i;
+          return (
+            <line
+              key={`string-${i}`}
+              x1={getX(i)}
+              y1={PADDING_TOP}
+              x2={getX(i)}
+              y2={bottomY}
+              stroke="var(--string-color)"
+              strokeWidth={1 + thicknessIndex * 0.2}
+            />
+          );
+        })}
 
         {/* Barre chords */}
         {barres?.map((barre, idx) => {

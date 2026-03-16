@@ -37,8 +37,19 @@ export default function Theory() {
     []
   );
 
-  const titleKeyMap = { 'magic-chords': 'magicChords', 'capo-guide': 'capoGuide', 'chord-anatomy': 'chordAnatomy', 'keys-scales': 'keysScales' };
+  const titleKeyMap = {
+    'guitar-basics': 'guitarBasics',
+    'barre-explained': 'barreTitle',
+    'pro-tips': 'proTipsTitle',
+    'magic-chords': 'magicChords',
+    'capo-guide': 'capoGuide',
+    'chord-anatomy': 'chordAnatomy',
+    'keys-scales': 'keysScales',
+  };
   const guideConfig = [
+    { id: 'guitar-basics', icon: '🎸', color: '#E8C547', hasBasics: true },
+    { id: 'barre-explained', icon: '✋', color: '#A8D8EA', hasBarre: true },
+    { id: 'pro-tips', icon: '💡', color: '#FFEAA7', hasProTips: true },
     { id: 'magic-chords', icon: '🪄', color: '#F6C28B', hasSongFilter: true },
     { id: 'capo-guide', icon: '🔧', color: '#A8D8EA' },
     { id: 'chord-anatomy', icon: '🎼', color: '#D5AAFF', hasDiagram: true },
@@ -79,16 +90,62 @@ export default function Theory() {
                 </div>
                 <div>
                   <h2 className="theory__guide-title">{t(`theory.${titleKeyMap[section.id]}`)}</h2>
-                  <span className="theory__guide-subtitle">{section.id === 'magic-chords' ? 'The Magic Chords' : section.id === 'capo-guide' ? 'The Capo Magic' : section.id === 'chord-anatomy' ? 'Anatomy of a Chord' : 'Keys & Scales'}</span>
+                  <span className="theory__guide-subtitle">
+                    {section.id === 'guitar-basics' && (locale === 'he' ? 'מיתרים, סריגים ומז\'ור/מינור' : 'Strings, frets & major/minor')}
+                    {section.id === 'barre-explained' && (locale === 'he' ? 'מה זה בארה?' : 'What is a barre?')}
+                    {section.id === 'pro-tips' && (locale === 'he' ? 'טכניקות נגינה' : 'Playing techniques')}
+                    {section.id === 'magic-chords' && 'The Magic Chords'}
+                    {section.id === 'capo-guide' && 'The Capo Magic'}
+                    {section.id === 'chord-anatomy' && 'Anatomy of a Chord'}
+                    {section.id === 'keys-scales' && 'Keys & Scales'}
+                  </span>
                 </div>
               </div>
 
-              <p className="theory__guide-body">
-                {section.id === 'magic-chords' && t('theory.magicBody')}
-                {section.id === 'capo-guide' && t('theory.capoBody')}
-                {section.id === 'chord-anatomy' && t('theory.anatomyBody')}
-                {section.id === 'keys-scales' && t('theory.keysBody')}
-              </p>
+              {section.hasBasics && (
+                <div className="theory__guide-basics">
+                  <div className="theory__guide-basics-block">
+                    <h3 className="theory__guide-basics-heading">{t('theory.stringsNotesTitle')}</h3>
+                    <p className="theory__guide-body">{t('theory.stringsNotesBody')}</p>
+                  </div>
+                  <div className="theory__guide-basics-block">
+                    <h3 className="theory__guide-basics-heading">{t('theory.fretPrincipleTitle')}</h3>
+                    <p className="theory__guide-body">{t('theory.fretPrincipleBody')}</p>
+                  </div>
+                  <div className="theory__guide-basics-block">
+                    <h3 className="theory__guide-basics-heading">{t('theory.majorMinorSimpleTitle')}</h3>
+                    <p className="theory__guide-body">{t('theory.majorMinorSimpleBody')}</p>
+                  </div>
+                </div>
+              )}
+
+              {section.hasBarre && (
+                <div className="theory__guide-body-wrap">
+                  <p className="theory__guide-body">{t('theory.barreBody')}</p>
+                  <div className="theory__guide-info-box">
+                    <span className="theory__guide-info-icon">💡</span>
+                    <p>{t('theory.barreTip')}</p>
+                  </div>
+                </div>
+              )}
+
+              {section.hasProTips && (
+                <div className="theory__guide-body-wrap">
+                  <ul className="theory__guide-tips-list">
+                    <li><strong>{t('theory.tipFingertip')}</strong></li>
+                    <li><strong>{t('theory.tipArching')}</strong></li>
+                  </ul>
+                </div>
+              )}
+
+              {!section.hasBasics && !section.hasBarre && !section.hasProTips && (
+                <p className="theory__guide-body">
+                  {section.id === 'magic-chords' && t('theory.magicBody')}
+                  {section.id === 'capo-guide' && t('theory.capoBody')}
+                  {section.id === 'chord-anatomy' && t('theory.anatomyBody')}
+                  {section.id === 'keys-scales' && t('theory.keysBody')}
+                </p>
+              )}
 
               {section.id === 'capo-guide' && (
                 <div className="theory__guide-info-box">
